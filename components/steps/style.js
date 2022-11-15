@@ -7,6 +7,13 @@ export const useStyleSteps = makeStyles({
         display: 'flex',
         alignItems: 'center'
     },
+    adultsChildrenLeft: {
+        fontWeight: 'bold !important',
+        width: '40%'
+    },
+    adultsChildrenRight: {
+        width: '60%',
+    },
     eventRateMain: {
         textAlign: 'center',
         marginBottom: '150px'
@@ -59,6 +66,37 @@ export const useStyleSteps = makeStyles({
         color: '#000',
         "&:before, &:after": {
             content: 'none !important'
+        },
+    },
+    countPlusMinus: {
+        borderRadius: '10px',
+        display: 'flex',
+        boxShadow: '0px 0px 10px #ddd',
+        height: '80px',
+        '& svg': {
+            color: '#808080',
+            height: '40px',
+            width: '40px',
+            cursor: 'pointer'
+        }
+    },
+    countPlusMinusSub: {
+        width: '33%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        '& div.animated-container:nth-child(1)': {
+            color: '#e6e6e6 !important',
+        },
+        '& div.animated-container:nth-child(3)': {
+            color: '#9a9a9a !important',
+        },
+        '& div.animated-container:nth-child(7)': {
+            color: '#9a9a9a !important',
+        },
+        '& div.animated-container:nth-child(9)': {
+            color: '#e6e6e6 !important',
         },
     },
 })
