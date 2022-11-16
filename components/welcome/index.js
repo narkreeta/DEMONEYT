@@ -71,7 +71,7 @@ const WelcomeIndex = () => {
                     <Box className={classes.accordionMain}> 
                         {accordionData?.map((data, index) => {
                             return (
-                                <Accordion key={data?.name} className={classes.accordion} expanded={expanded === `panel${index+1}`} onChange={handleChange(`panel${index+1}`)}>
+                                <Accordion key={data?.name} className={`${classes.accordion} ${data?.data?.length > 0 ? '' : classes.zeroMargin}`} expanded={expanded === `panel${index+1}`} onChange={handleChange(`panel${index+1}`)}>
                                     <AccordionSummary
                                         expandIcon={ expanded === `panel${index+1}` ?
                                             <AiFillUpCircle className={classes.accordionIcon} /> :

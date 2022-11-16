@@ -11,13 +11,25 @@ export const useStylesNewreport = makeStyles({
         paddingLeft: '40px',
         fontSize: '22pt !important',
         fontWeight: 'bold !important',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
         //left: '10%'
+        '& h4': {
+            fontSize: '24pt !important',
+        },
+        ['@media (max-width:767px)']: {
+            '& h4': {
+                fontSize: '20pt !important',
+            },
+            paddingLeft: '15px',
+        },
     },
     bannerContentBtn: {
         color: '#fff !important',
         paddingTop: '0 !important',
-        marginRight: '35px !important'
+        marginRight: '35px !important',
+        ['@media (max-width:640px)']: {
+            marginRight: '0px !important',
+        },
     },
     inputBox: {
         boxShadow: '0px 0px 10px inset',
@@ -37,6 +49,9 @@ export const useStylesNewreport = makeStyles({
     },
     cardContent: {
         padding: '25px 50px !important',
+        ['@media (max-width:640px)']: {
+            padding: '25px 15px !important',
+        }
     },
     reportData: {
         display: 'flex',
@@ -62,17 +77,46 @@ export const useStylesNewreport = makeStyles({
         justifyContent: 'center',
         border: '1px solid #00D084',
         borderRadius: '50%',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        
+        ['@media (max-width:767px)']: {
+            height: '25px',
+            width: '25px',
+            '& svg': {
+                fontSize: '15px'
+            },
+        }
     },
     addAnotherStep: {
         justifyContent: 'flex-start !important',
         color: '#00D084 !important',
         borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+        '& p': {
+            fontWeight: 'bold', 
+            fontSize: '21pt',
+            ['@media (max-width:767px)']: {
+                fontSize: '17pt !important',
+            },
+            ['@media (max-width:640px)']: {
+                fontSize: '15pt !important',
+            },
+        }
+        // ['@media (max-width:767px)']: {
+        //     fontSize: '22pt !important',
+        // }
     },
     btnPart: {
         marginTop: '70px',
         display: 'flex',
         gap: '20px',
+        ['@media (max-width:640px)']: {
+            flexDirection: 'column-reverse',
+            alignItems: 'center',
+            gap: '15px',
+            '& div.MuiBox-root.css-11qjisw': {
+                display: 'none'
+            },
+        },
     },
     btnPartBtn: {
         width: '50%',
@@ -83,6 +127,15 @@ export const useStylesNewreport = makeStyles({
         fontWeight: 'bold !important',
         "&:hover": {
             backgroundColor: 'transparent !important',
+        },
+        ['@media (max-width:767px)']: {
+            height: '48px',
+            fontSize: '14pt !important'
+        },
+        ['@media (max-width:640px)']: {
+            width: '100%',
+            height: '43px',
+            fontSize: '12pt !important'
         },
     },
     backBtn: {

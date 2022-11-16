@@ -2,17 +2,23 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStylesWelcome = makeStyles({
     root: {
-        height: '100vh', 
+        height: '100%',
+        minHeight: '100vh', 
         width: '100%',
         display: 'flex',
         alignItems: 'center',
     },
     card: {
-        width: '65%',
-        margin: 'auto',
+        //width: '65%',
+        //margin: 'auto',
+        maxWidth: '80%',
+        margin: '2rem auto',
         borderRadius: 0,
         borderBottom: '5px solid #00D084',
-        position: 'relative'
+        position: 'relative',
+        ['@media (max-width:640px)']: { 
+            maxWidth: '90%'
+        }
     },
     bannerContent: {
         position: "absolute",
@@ -22,8 +28,15 @@ export const useStylesWelcome = makeStyles({
         color: '#fff',
         paddingLeft: '40px',
         fontSize: '34pt !important',
-        fontWeight: 'bold !important'
+        fontWeight: 'bold !important',
         //left: '10%'
+        ['@media (max-width:767px)']: { 
+            fontSize: '28pt !important',
+        },
+        ['@media (max-width:640px)']: { 
+            paddingLeft: '20px !important',
+            fontSize: '25pt !important',
+        }
     },
     accordionSummary: {
         flexDirection: 'row-reverse',
@@ -43,12 +56,23 @@ export const useStylesWelcome = makeStyles({
         color: '#00D084',
         fontSize: '18pt !important',
         borderBottom: '1px solid #cdcdcd !important',
-        padding: '12px 12px 12px 40px !important'
+        padding: '12px 12px 12px 40px !important',
+        ['@media (max-width:767px)']: { 
+            fontSize: '16pt !important',
+        },
+        ['@media (max-width:640px)']: { 
+            paddingLeft: '20px !important',
+            fontSize: '14pt !important',
+            lineHeight: '1.5'
+        }
     },
     accordionMain: {
         // width: '80%',
         // margin: 'auto'
-        margin: '0px 40px 30px 40px'
+        margin: '0px 40px 30px 40px',
+        ['@media (max-width:640px)']: { 
+            margin: '0px 20px 30px 20px !important',
+        }
     }, 
     accordion: {
         boxShadow: 'none !important',
@@ -57,20 +81,44 @@ export const useStylesWelcome = makeStyles({
             borderRadius: '0'
         }
     },
+    zeroMargin: {
+        margin: '0 !important',
+        '& .MuiAccordionSummary-root': {
+            minHeight: '48px !important',
+        },
+        '& .MuiAccordionSummary-content': {
+            margin: '12px 0px !important'
+        },
+        '& .MuiAccordionDetails-root': {
+            padding: '0 !important'
+        }
+    },
     accordionIcon: {
         color: '#00D084',
         fontSize: '28px !important',
         transform: 'none !important',
         WebkitTransform: 'none !important',
         //marginRight: '15px'
+        ['@media (max-width:767px)']: { 
+            fontSize: '25px !important',
+        },
     },
     accordionHeadContent: {
         marginLeft: '15px !important',
         fontSize: '16pt !important',
-        fontWeight: 'bold !important'
+        fontWeight: 'bold !important',
+        ['@media (max-width:767px)']: { 
+            fontSize: '14pt !important',
+        },
+        ['@media (max-width:640px)']: { 
+            fontSize: '13pt !important',
+        },
     },
     accordionDetails: {
-        padding: '0px 0px 0px 60px !important'
+        padding: '0px 0px 0px 60px !important',
+        ['@media (max-width:640px)']: { 
+            paddingLeft: '15px !important'
+        },
     },
     accordionDetailsBox: {
         borderBottom: '1px solid #cdcdcd',
@@ -90,7 +138,13 @@ export const useStylesWelcome = makeStyles({
         marginLeft: '15px !important',
         fontSize: '14pt !important',
         color: '#000',
-        textTransform: 'initial'
+        textTransform: 'initial',
+        ['@media (max-width:767px)']: { 
+            fontSize: '12pt !important',
+        },
+        ['@media (max-width:767px)']: { 
+            fontSize: '11pt !important',
+        },
     },
     reportIssue: {
         marginTop: '50px !important',

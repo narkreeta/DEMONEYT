@@ -24,6 +24,12 @@ export const useStylesEdit = makeStyles({
     categoryTitle: {
         color: '#00D084',
         fontWeight: 'bold !important',
-        marginBottom: '30px !important'
+        marginBottom: '30px !important',
+        ['@media (max-width:767px)']: {
+            fontSize: '22px',
+        },
+        ['@media (max-width:640px)']: {
+            fontSize: '20px',
+        }
     }
 });

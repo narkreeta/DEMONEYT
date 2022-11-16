@@ -48,7 +48,7 @@ const Edit = () => {
             <Typography variant='h5' className={editClasses.categoryTitle}>Select your Category & Data Point</Typography>
             {editData?.map((data, index) => {
                 return (
-                    <Accordion key={data?.name} className={welcomeClasses.accordion} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
+                    <Accordion key={data?.name} className={`${welcomeClasses.accordion} ${data?.data?.length > 0 ? '' : welcomeClasses.zeroMargin}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
                         <AccordionSummary
                             expandIcon={expanded === `panel${index + 1}` ?
                                 <AiFillUpCircle className={welcomeClasses.accordionIcon} /> :

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useStyleSteps } from './style';
-import AnimatedNumber from "react-animated-numbers";
+//import AnimatedNumber from "react-animated-numbers";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
@@ -27,7 +27,7 @@ const Children = () => {
                     <div className={classesSteps.countPlusMinusSub}>
                         <RemoveCircleOutlineIcon onClick={decreaseNumber} />
                     </div>
-                    <div className={classesSteps.countPlusMinusSub} style={{ borderLeft: '1px solid #bfbfbf', borderRight: '1px solid #bfbfbf' }}>
+                    {/* <div className={classesSteps.countPlusMinusSub} style={{ borderLeft: '1px solid #bfbfbf', borderRight: '1px solid #bfbfbf' }}>
                         <AnimatedNumber animateToNumber={number - 2} fontStyle={{ fontSize: 8 }} />
                         <AnimatedNumber animateToNumber={number - 1} fontStyle={{ fontSize: 12 }} />
                         <AnimatedNumber
@@ -41,7 +41,7 @@ const Children = () => {
                         />
                         <AnimatedNumber animateToNumber={number + 1} fontStyle={{ fontSize: 12 }} />
                         <AnimatedNumber animateToNumber={number + 2} fontStyle={{ fontSize: 8 }} />
-                    </div>
+                    </div> */}
                     <div className={classesSteps.countPlusMinusSub}>
                         <ControlPointIcon onClick={increaseNumber} />
                     </div>

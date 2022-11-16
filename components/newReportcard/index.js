@@ -14,6 +14,7 @@ import { RiArrowUpDownFill } from 'react-icons/ri';
 import AddIcon from '@mui/icons-material/Add';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Edit from './edit';
+import NewstepIndex from '../newStep';
 
 const style = {
     position: 'absolute',
@@ -21,6 +22,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 600,
+    maxWidth: '90%',
     bgcolor: 'background.paper',
     boxShadow: 24,
 };
@@ -28,15 +30,17 @@ const style = {
 const NewReportIndex = ({ open, setOpen }) => {
     const classes = useStylesNewreport();
     const handleClose = () => setOpen(false);
-    const [state, setState] = useState(['Step1', 'Step2', 'Step3']);
+    const [state, setState] = useState(['Step1']);
     const [edit, setEdit] = useState(false);
     const [reportName, setReportName] = useState('');
+    const [stepOpen, setStepOpen] = useState(false);
 
     const handleBack = () => {
         setEdit(false)
     }
 
     return (
+        <>
         <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
@@ -89,10 +93,10 @@ const NewReportIndex = ({ open, setOpen }) => {
                                     )
                                 })}
                                 <Box className={`${classes.reportData} ${classes.addAnotherStep}`}>
-                                    <Box className={classes.reportDataIcon}>
+                                    <Box className={classes.reportDataIcon} onClick={() => setStepOpen(true)}>
                                         <AddIcon color='#00D084' />
                                     </Box>
-                                    <Typography style={{ fontWeight: 'bold', fontSize: '21pt' }}>Add another step</Typography>
+                                    <Typography>Add another step</Typography>
                                 </Box>
                             </>
                         }
@@ -104,6 +108,8 @@ const NewReportIndex = ({ open, setOpen }) => {
                 </Box>
             </Fade>
         </Modal>
+        <NewstepIndex stepOpen={stepOpen} setStepOpen={setStepOpen} />
+        </>
     )
 }
 

@@ -5,15 +5,25 @@ export const useStylesReport = makeStyles({
         display: 'flex',
         borderBottom: '1px solid #cdcdcd',
         paddingBottom: '15px',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        ['@media (max-width:767px)']: { 
+            flexDirection: 'column',
+        }
     },
     stepperTopLeft: {
         width: '30%',
         color: '#00D084',
-        fontWeight: 'bold !important'
+        fontWeight: 'bold !important',
+        ['@media (max-width:767px)']: { 
+            width: '100%',
+            marginBottom: '20px'
+        },
     },
     stepperTopRight: {
         width: '70%',
+        ['@media (max-width:767px)']: { 
+            width: '100%'
+        },
     },
     stepperIcon: {
         border: '1px solid #00D084',
@@ -46,6 +56,10 @@ export const useStylesReport = makeStyles({
                 borderRadius: '50%',
                 background: '#cccccc'
             }
-        }
+        },
+        ['@media (max-width:767px)']: { 
+            height: '25px',
+            width: '25px',
+        },
     },
 });
