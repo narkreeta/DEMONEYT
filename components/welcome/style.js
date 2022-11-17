@@ -87,7 +87,8 @@ export const useStylesWelcome = makeStyles({
             minHeight: '48px !important',
         },
         '& .MuiAccordionSummary-content': {
-            margin: '12px 0px !important'
+            margin: '12px 0px !important',
+            display: 'block'
         },
         '& .MuiAccordionDetails-root': {
             padding: '0 !important'

@@ -30,6 +30,7 @@ const WelcomeIndex = () => {
         {name: 'Previous reports', data: []},
         {name: 'Account setting', data: []},
     ]);
+    const [stepsData, setStepsData] = useState([]);
     const classes = useStylesWelcome();
 
     const handleChange =
@@ -107,7 +108,12 @@ const WelcomeIndex = () => {
                     </Box>
                 </CardContent>
             </Card>
-            <NewReportIndex open={open} setOpen={setOpen} />
+            <NewReportIndex
+                open={open} 
+                setOpen={setOpen} 
+                stepsData={stepsData}
+                setStepsData={setStepsData}
+            />
             <ReportIndex reportOpen={reportOpen} setReportOpen={setReportOpen} />
         </div>
     )

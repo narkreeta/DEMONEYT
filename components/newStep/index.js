@@ -18,6 +18,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { AiFillUpCircle } from 'react-icons/ai';
 import { useStylesWelcome } from '../welcome/style';
+import { useStylesNewstep } from './style';
 
 const style = {
     position: 'absolute',
@@ -28,16 +29,22 @@ const style = {
     maxWidth: '90%',
     bgcolor: 'background.paper',
     boxShadow: 24,
+    height: '100%',
+    margin: '2rem auto',
+    overflowY: 'scroll',
+    paddingBottom: '30px'
 };
 
-const NewstepIndex = ({ stepOpen, setStepOpen }) => {
+const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
     const newReportClasses = useStylesNewreport();
     const editReportClasses = useStylesEdit();
     const welcomeClasses = useStylesWelcome();
+    const classes = useStylesNewstep();
+
     const handleClose = () => setStepOpen(false);
     const [addData, setAddData] = useState([
-        { name: 'Timer', data: [] },
-        { name: 'Date', data: [] },
+        { name: 'Timer', data: ['timer'] },
+        { name: 'Date', data: ['date'] },
         { name: 'Counter', data: ['Attendees', 'Children', 'Adults', 'Boys', 'Girls', 'Over 18', 'Under 18', 'Over 60s'] },
         { name: 'A / B Choice', data: [] }
     ]);
@@ -56,6 +63,10 @@ const NewstepIndex = ({ stepOpen, setStepOpen }) => {
         else {
             setCounterData([...counterData, data]);
         }
+    }
+
+    const handleSave = () => {
+        
     }
 
     return (
@@ -95,9 +106,9 @@ const NewstepIndex = ({ stepOpen, setStepOpen }) => {
                     <CardContent className={newReportClasses.cardContent}>
                         <Input placeholder='New report card' className={newReportClasses.inputBox} />
                         <Typography variant='h5' className={editReportClasses.categoryTitle}>Select your Category & Data Point</Typography>
-                        {addData?.map((data, index) => {
+                        {addData?.map((ele, index) => {
                             return (
-                                <Accordion key={data?.name} className={`${welcomeClasses.accordion} ${data?.data?.length > 0 ? '' : welcomeClasses.zeroMargin}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
+                                <Accordion key={ele?.name} className={`${welcomeClasses.accordion} ${ele?.data?.length > 0 ? '' : welcomeClasses.zeroMargin}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
                                     <AccordionSummary
                                         expandIcon={expanded === `panel${index + 1}` ?
                                             <AiFillUpCircle className={welcomeClasses.accordionIcon} /> :
@@ -105,26 +116,49 @@ const NewstepIndex = ({ stepOpen, setStepOpen }) => {
                                         }
                                         aria-controls={`panel${index + 1}bh-content`}
                                         id={`panel${index + 1}bh-header`}
-                                        className={welcomeClasses.accordionSummary}
-                                        style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}
+                                        className={`${welcomeClasses.accordionSummary} ${classes.accordionSummary}`}
+                                        style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4'}}
                                     >
-                                        <Typography className={welcomeClasses.accordionHeadContent}>
-                                            {data?.name}
-                                        </Typography>
+                                        <div className={classes.accordionSummaryData}>
+                                            <Typography className={welcomeClasses.accordionHeadContent}>
+                                                {ele?.name}
+                                            </Typography>
+                                        </div>
                                     </AccordionSummary>
                                     <AccordionDetails className={editReportClasses.accordionDetails}>
-                                        {data?.data?.map((data, ind) => {
+                                        {ele?.data?.map((data, ind) => {
                                             console.log(data, 'dtt t')
                                             return (
-                                                <Box className={`${editReportClasses.accordionDetailsBox} ${counterData?.includes(data) ? editReportClasses.accordionDetailsBoxActive : ''}`} onClick={() => handleSubcontent(data)}>
-                                                    <Typography style={{ fontWeight: 'bold' }}>{data}</Typography>
-                                                </Box>
+                                                <>
+                                                    { ele?.name == 'Counter' && 
+                                                        <Box className={`${editReportClasses.accordionDetailsBox} ${counterData?.includes(data) ? editReportClasses.accordionDetailsBoxActive : ''}`} onClick={() => handleSubcontent(data)}>
+                                                            <Typography style={{ fontWeight: 'bold' }}>{data}</Typography>
+                                                        </Box>
+                                                    }
+                                                    { ele?.name == 'Timer' && 
+                                                        <Box className={classes.summaryRight}>
+                                                            <Input className={classes.summaryRightInput} />
+                                                            <Input className={classes.summaryRightInput} />
+                                                        </Box>
+                                                    }
+                                                    { ele?.name == 'Date' && 
+                                                        <Box className={classes.summaryRight}>
+                                                            <Input className={classes.summaryRightInput} />
+                                                            <Input className={classes.summaryRightInput} />
+                                                            <Input className={classes.summaryRightInput} />
+                                                        </Box>
+                                                    }
+                                                </>
                                             )
                                         })}
                                     </AccordionDetails>
                                 </Accordion>
                             )
                         })}
+                        <Box className={newReportClasses.btnPart}>
+                            <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`} onClick={() => handleBack()}>Back</Button>
+                            <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`} onClick={() => handleSave()}>Save</Button>
+                        </Box>
                     </CardContent>
                 </Box>
             </Fade>

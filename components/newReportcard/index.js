@@ -25,9 +25,13 @@ const style = {
     maxWidth: '90%',
     bgcolor: 'background.paper',
     boxShadow: 24,
+    height: '100%',
+    margin: '2rem auto',
+    overflowY: 'scroll',
+    paddingBottom: '30px'
 };
 
-const NewReportIndex = ({ open, setOpen }) => {
+const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
     const classes = useStylesNewreport();
     const handleClose = () => setOpen(false);
     const [state, setState] = useState(['Step1']);
@@ -108,7 +112,12 @@ const NewReportIndex = ({ open, setOpen }) => {
                 </Box>
             </Fade>
         </Modal>
-        <NewstepIndex stepOpen={stepOpen} setStepOpen={setStepOpen} />
+        <NewstepIndex 
+            stepOpen={stepOpen} 
+            setStepOpen={setStepOpen} 
+            stepsData={stepsData}
+            setStepsData={setStepsData}
+        />
         </>
     )
 }

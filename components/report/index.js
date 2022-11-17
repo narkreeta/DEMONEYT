@@ -28,6 +28,10 @@ const style = {
   maxWidth: '90%',
   bgcolor: 'background.paper',
   boxShadow: 24,
+  height: '100%',
+  margin: '2rem auto',
+  overflowY: 'scroll',
+  paddingBottom: '30px'
 };
 
 const ReportIndex = ({ reportOpen, setReportOpen }) => {

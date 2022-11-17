@@ -8,6 +8,7 @@ export const useStylesReport = makeStyles({
         marginBottom: '20px',
         ['@media (max-width:767px)']: { 
             flexDirection: 'column',
+            borderBottom: '0'
         }
     },
     stepperTopLeft: {
@@ -16,13 +17,14 @@ export const useStylesReport = makeStyles({
         fontWeight: 'bold !important',
         ['@media (max-width:767px)']: { 
             width: '100%',
-            marginBottom: '20px'
+            marginBottom: '20px !important',
+            textAlign: 'center'
         },
     },
     stepperTopRight: {
         width: '70%',
         ['@media (max-width:767px)']: { 
-            width: '100%'
+            width: '100%',
         },
     },
     stepperIcon: {

@@ -110,7 +110,7 @@ export const useStyleSteps = makeStyles({
             cursor: 'pointer'
         },
         ['@media (max-width:640px)']: { 
-            height: '60px',
+            //height: '60px',
             '& svg': {
                 height: '30px',
                 width: '30px',
@@ -135,5 +135,58 @@ export const useStyleSteps = makeStyles({
         '& div.animated-container:nth-child(9)': {
             color: '#e6e6e6 !important',
         },
+    },
+    counterSection: {
+        backgroundColor: '#fff',
+        width: '100%',
+        // height: '40px',
+        marginTop: '0px',
+        paddingTop: '0px',
+        position: 'relative',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    counterTop: {
+        margin: '0',
+        padding: '0',
+        fontSize: '12px',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: 'gray',
+    },
+    counterMiddle: {
+        // backgroundColor: '#fff',
+        fontSize: '24px',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        margin: '0',
+        padding: '0',
+       /* @keyframes example {
+            0%   {color:'red'; left:'0px'; top:'0px';}
+            25%  {color:'yellow'; left:'200px'; top:'0px';}
+            50%  {color:'blue'; left:'200px'; top:'200px';}
+            75%  {color:'green'; left:'0px'; top:'200px';}
+            100% {color:'red'; left:'0px'; top:'0px';}
+          } */
+    },
+    counterBottom: {
+        margin: '0',
+        padding: '0',
+        fontSize: '12px',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: 'gray',
+    },
+    counterTopAbove: {
+        fontSize: '8px',
+        color: '#e6e6e6',
+        fontWeight: 'bold'
+    },
+    counterBottomBelow: {
+        fontSize: '8px',
+        color: '#e6e6e6',
+        fontWeight: 'bold'
     },
 })
