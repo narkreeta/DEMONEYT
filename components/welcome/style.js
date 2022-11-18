@@ -116,10 +116,7 @@ export const useStylesWelcome = makeStyles({
         },
     },
     accordionDetails: {
-        padding: '0px 0px 0px 60px !important',
-        ['@media (max-width:640px)']: { 
-            paddingLeft: '15px !important'
-        },
+        padding: '0px !important',
     },
     accordionDetailsBox: {
         borderBottom: '1px solid #cdcdcd',

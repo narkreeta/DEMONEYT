@@ -24,10 +24,9 @@ const WelcomeIndex = () => {
     const [open, setOpen] = useState(false);
     const [reportOpen, setReportOpen] = useState(false);
     const [accordionData, setAccordionData] = useState([
-        {name: 'Make a report', data: []},
+        {name: 'Upcoming & current reports', data: []},
         {name: 'Add / edit report cards', data: ['New report card', 'Continue last report card', 'Edit existing report card']},
-        {name: 'Users & Groups', data: []},
-        {name: 'Previous reports', data: []},
+        {name: 'Past reports', data: []},
         {name: 'Account setting', data: []},
     ]);
     const [stepsData, setStepsData] = useState([]);
