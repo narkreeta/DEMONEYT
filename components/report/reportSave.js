@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useStylesNewreport } from '../newReportcard/style';
 import CardContent from '@mui/material/CardContent';
-import { useStylesCardSave } from './style';
+import { useStylesCardSave } from '../cardSave/style';
 import rightIcon from '../../public/asset/images/rightIcon.png';
 import Image from 'next/image'
 
@@ -29,7 +29,7 @@ const style = {
   paddingBottom: '30px'
 };
 
-const CardSave = ({ reportSaved, setReportSaved }) => {
+const ReportSave = ({ reportSaved, setReportSaved }) => {
   const newReportClasses = useStylesNewreport();
   const classes = useStylesCardSave();
   const handleClose = () => setReportSaved(false);
@@ -71,7 +71,6 @@ const CardSave = ({ reportSaved, setReportSaved }) => {
             <Box className={classes.cardSavedMain}>
               <Image src={rightIcon} />
               <Typography className={classes.cardSavedMainTitle} variant='h5'>Your card has been successfully sent.</Typography>
-              <Typography className={classes.cardSavedMainDesc}>The recipients will receive access to this card on the chosen time and date</Typography>
               <Button className={classes.cardSavedMainBtn} onClick={() => handleClose()}>Back</Button>
             </Box>
           </CardContent>
@@ -81,4 +80,4 @@ const CardSave = ({ reportSaved, setReportSaved }) => {
   )
 }
 
-export default CardSave
+export default ReportSave

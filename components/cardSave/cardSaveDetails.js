@@ -50,7 +50,7 @@ const CardSaveDetails = ({cardSaveDetailsOpen, setCardSaveDetailsOpen}) => {
             }}
         >
             <Fade in={cardSaveDetailsOpen}>
-                <Box sx={style}>
+                <Box sx={style} className={newReportClasses.boxStyle}>
                     <CardMedia
                         component="img"
                         height="150"
@@ -114,21 +114,21 @@ const CardSaveDetails = ({cardSaveDetailsOpen, setCardSaveDetailsOpen}) => {
                         </Box>
                         <Box className={classes.cardSaveDetailsDateTimeInputBox}>
                             <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>Email address for card recipients</Typography>
-                            <Input className={classes.cardSaveDetailsDateTimeInputBoxInput} />
+                            <Input placeholder='Use a comma to separate addresses' className={classes.cardSaveDetailsDateTimeInputBoxInput} />
                         </Box>
                         <Box className={classes.cardSaveDetailsDateTimeInputBox}>
                             <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>Email address for report recipients</Typography>
-                            <Input className={classes.cardSaveDetailsDateTimeInputBoxInput} />
+                            <Input placeholder='Use a comma to separate addresses' className={classes.cardSaveDetailsDateTimeInputBoxInput} />
                         </Box>
                         <Box className={newReportClasses.btnPart}>
-                            <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`}>Back</Button>
-                            <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`}>Save</Button>
+                            <Button onClick={() => handleClose()} className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`}>Back</Button>
+                            <Button onClick={() => setReportSaved(true)} className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`}>Save</Button>
                         </Box>
                     </CardContent>
                 </Box>
             </Fade>
         </Modal>
-        {/* <CardSave reportSaved={reportSaved} setReportSaved={setReportSaved} /> */}
+        <CardSave reportSaved={reportSaved} setReportSaved={setReportSaved} />
     </>
   )
 }

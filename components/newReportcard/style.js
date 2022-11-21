@@ -1,6 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles'; 
 
 export const useStylesNewreport = makeStyles({
+    boxStyle: {
+        '&::-webkit-scrollbar': {
+            width: '10px'
+        },
+        '&::-webkit-scrollbar-track': {
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#00D084',
+            borderRadius: '10px'
+        },
+    },
     bannerContent: {
         display: 'flex',
         position: "absolute",

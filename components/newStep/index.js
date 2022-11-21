@@ -110,7 +110,7 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
             }}
         >
             <Fade in={stepOpen}>
-                <Box sx={style}>
+                <Box sx={style} className={newReportClasses.boxStyle}>
                     <CardMedia
                         component="img"
                         height="150"

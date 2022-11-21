@@ -64,4 +64,36 @@ export const useStylesReport = makeStyles({
             width: '25px',
         },
     },
+    reviewReportMain: {},
+    reviewReportTitle: {
+        color: '#00D084',
+        fontSize: '14px',
+        fontWeight: 'bold',
+        marginBottom: '5px'
+    },
+    reviewReportQue: {
+        fontSize: '26px',
+        fontWeight: 'bold'
+    },
+    reviewReportDesc: {},
+    reviewReportBlock: {
+        display: 'flex',
+        marginBottom: '30px',
+        borderBottom: '1px solid #00D084',
+        paddingBottom: '15px'
+    },
+    reviewReportTwoBlock: {
+        display: 'flex',
+        marginBottom: '30px',
+        gap: '30px'
+    },
+    reviewReportTwoBlockSub: {
+        width: '50%',
+        borderBottom: '1px solid #00D084',
+        paddingBottom: '15px'
+    },
+    reviewReportSubpart: {
+        borderBottom: '0 !important',
+        marginBottom: '0 !important',
+    }
 });

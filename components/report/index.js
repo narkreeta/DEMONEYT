@@ -18,6 +18,8 @@ import AdultsChildren from '../steps/adultsChildren';
 import EventRate from '../steps/eventRate';
 import Feedback from '../steps/feedback';
 import Form from '../steps/form';
+import ReviewReport from './reviewReport';
+import ReportSave from './reportSave';
 
 const style = {
   position: 'absolute',
@@ -37,9 +39,10 @@ const style = {
 const ReportIndex = ({ reportOpen, setReportOpen }) => {
   const classesNewreport = useStylesNewreport();
   const classesReport = useStylesReport();
-  const steps = ['', '', '', '', '', ''];
+  const steps = ['', '', '', ''];
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [reportSaved, setReportSaved] = useState(false);
   const handleClose = () => setReportOpen(false);
 
   const isStepOptional = (step) => {
@@ -81,13 +84,10 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
     });
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   console.log(activeStep, 'activeStep');
 
   return (
+    <>
     <Modal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
@@ -100,7 +100,7 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
       }}
     >
       <Fade in={reportOpen}>
-        <Box sx={style}>
+        <Box sx={style} className={classesNewreport.boxStyle}>
           <CardMedia
             component="img"
             height="150"
@@ -115,7 +115,15 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
               component="h6"
               fontWeight="bold"
             >
-              Making a report:
+              {activeStep === steps.length ? (
+                <>
+                  <Typography>Review your report</Typography>
+                  <Typography variant='h5'>NSW January Art Class</Typography>
+                </>
+              ) : (
+                <Typography>Making a report:</Typography>
+              )
+              }
             </Typography>
             <Button className={classesNewreport.bannerContentBtn} onClick={() => handleClose()}>
               <HighlightOffIcon style={{ fontSize: '30px' }} />
@@ -123,7 +131,7 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
           </Box>
           <CardContent className={classesNewreport.cardContent}>
             <Box>
-              <Box className={classesReport.stepperTop}>
+              {activeStep !== steps.length && <Box className={classesReport.stepperTop}>
                 <Typography variant='h5' className={classesReport.stepperTopLeft}>Step 1 of {activeStep + 1}</Typography>
                 <Stepper activeStep={activeStep} className={classesReport.stepperTopRight}>
                   {steps.map((label, index) => {
@@ -144,24 +152,31 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
                     );
                   })}
                 </Stepper>
-              </Box>
+              </Box>}
               {activeStep === steps.length ? (
-                <React.Fragment>
-                  <Typography sx={{ mt: 2, mb: 1 }}>
-                    All steps completed - you&apos;re finished
-                  </Typography>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                    <Box sx={{ flex: '1 1 auto' }} />
-                    <Button onClick={handleReset}>Reset</Button>
+                <>
+                  <ReviewReport />
+                  <Box className={classesNewreport.btnPart}>
+                    <Button
+                      color="inherit"
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                      className={`${classesNewreport.btnPartBtn} ${classesNewreport.backBtn}`}
+                    >
+                      Back
+                    </Button>
+                    <Button onClick={() => setReportSaved(true)} className={`${classesNewreport.btnPartBtn} ${classesNewreport.saveBtn}`}>
+                      Send
+                    </Button>
                   </Box>
-                </React.Fragment>
+                </>
               ) : (
                 <React.Fragment>
                   {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
-                  { activeStep == 0 && <AdultsChildren />}
-                  { activeStep == 1 && <EventRate />}
-                  { activeStep == 2 && <Feedback />}
-                  { activeStep == 3 && <Form />}
+                  {activeStep == 0 && <AdultsChildren />}
+                  {activeStep == 1 && <EventRate />}
+                  {activeStep == 2 && <Feedback />}
+                  {activeStep == 3 && <Form />}
                   <Box className={classesNewreport.btnPart}>
                     <Button
                       color="inherit"
@@ -188,6 +203,8 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
         </Box>
       </Fade>
     </Modal>
+    <ReportSave reportSaved={reportSaved} setReportSaved={setReportSaved} />
+    </>
   )
 }
 

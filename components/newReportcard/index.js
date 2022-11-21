@@ -57,7 +57,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
             }}
         >
             <Fade in={open}>
-                <Box sx={style}>
+                <Box sx={style} className={classes.boxStyle}>
                     <CardMedia
                         component="img"
                         height="150"

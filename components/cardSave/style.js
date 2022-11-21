@@ -13,14 +13,14 @@ export const useStylesCardSave = makeStyles({
         gap: '10px'
     },
     cardSaveDetailsDateTimeFieldTitle: {
-        marginBottom: '10px',
-        fontWeight: '600',
+        marginBottom: '10px !important',
+        fontWeight: '600 !important',
     },
     cardSaveDetailsTitle: {
-        fontWeight: 'bold',
+        fontWeight: 'bold !important',
         borderBottom: '1px solid #cdcdcd',
         paddingBottom: '30px',
-        marginBottom: '25px'
+        marginBottom: '25px !important'
     },
     cardSaveDetailsDate: {
         boxShadow: '0px 0px 10px inset',
@@ -84,5 +84,26 @@ export const useStylesCardSave = makeStyles({
             color: "#000 !important",
             "-webkit-text-fill-color": "#000 !important",
         }
+    },
+    cardSavedMain: {
+        textAlign: 'center',
+        padding: '30px'
+    },
+    cardSavedMainTitle: {
+        margin: '30px 0px',
+        fontSize: '30px',
+        fontWeight: 'bold'
+    },
+    cardSavedMainDesc: {
+        marginBottom: '50px',
+        fontSize: '18px',
+    },
+    cardSavedMainBtn: {
+        border: '2px solid #bfbfbf',
+        width: '130px',
+        color: '#808080',
+        textTransform: 'capitalize',
+        fontWeight: 'bold',
+        fontSize: '18px'
     }
 });
