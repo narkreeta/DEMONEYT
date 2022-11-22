@@ -24,7 +24,22 @@ export const useStylesNewstep = makeStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: '100%'
+        height: '100%',
+        ['@media (max-width:500px)']: {
+            flexDirection: 'column',
+            padding: '15px 0px'
+        }
+    },
+    accordionHeadContent: {
+        ['@media (max-width:500px)']: {
+            marginLeft: '0 !important',
+            marginBottom: '10px !important'
+        }
+    },
+    accordionDetails: {
+        ['@media (max-width:500px)']: {
+            paddingRight: '0 !important',
+        }
     },
     summaryRight: {
         display: 'flex',
@@ -39,6 +54,9 @@ export const useStylesNewstep = makeStyles({
         },
         '& div.MuiInputBase-root:last-child': {
             borderRight: '0'
+        },
+        ['@media (max-width:500px)']: {
+            height: '45px'
         }
     },
     summaryRightInput: {
@@ -47,6 +65,9 @@ export const useStylesNewstep = makeStyles({
         padding: '10px',
         "&:before, &:after": {
             content: 'none !important'
+        },
+        ['@media (max-width:500px)']: {
+            padding: '5px'
         }
     },
     counterSection: {
@@ -107,13 +128,36 @@ export const useStylesNewstep = makeStyles({
             fontWeight: 'bold',
             cursor: 'pointer'
         },
+        ['@media (max-width:500px)']: {
+            '& p': {
+                fontSize: '13px',
+                marginRight: '5px !important',
+                paddingRight: '5px !important'
+            }
+        }
+    },
+    counterRightActive: {
         '& p:first-child': {
             borderRight: '1px solid #00D084',
             marginRight: '15px',
             paddingRight: '15px'
+        },
+        ['@media (max-width:500px)']: {
+            marginRight: '5px',
+            paddingRight: '5px'
         }
     },
     counterLeftContent: {
         color: '#bfbfbf',
+        ['@media (max-width:500px)']: {
+            '& input': {
+                fontSize: '13px !important'
+            }
+        }
+    },
+    counterInput: {
+        "&:before, &:after": {
+            content: 'none !important'
+        }
     }
 });

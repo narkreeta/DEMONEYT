@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'; 
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStylesReport = makeStyles({
     stepperTop: {
@@ -6,7 +6,7 @@ export const useStylesReport = makeStyles({
         borderBottom: '1px solid #cdcdcd',
         paddingBottom: '15px',
         marginBottom: '20px',
-        ['@media (max-width:767px)']: { 
+        ['@media (max-width:767px)']: {
             flexDirection: 'column',
             borderBottom: '0'
         }
@@ -15,7 +15,7 @@ export const useStylesReport = makeStyles({
         width: '30%',
         color: '#00D084',
         fontWeight: 'bold !important',
-        ['@media (max-width:767px)']: { 
+        ['@media (max-width:767px)']: {
             width: '100%',
             marginBottom: '20px !important',
             textAlign: 'center'
@@ -23,7 +23,7 @@ export const useStylesReport = makeStyles({
     },
     stepperTopRight: {
         width: '70%',
-        ['@media (max-width:767px)']: { 
+        ['@media (max-width:767px)']: {
             width: '100%',
         },
     },
@@ -59,7 +59,7 @@ export const useStylesReport = makeStyles({
                 background: '#cccccc'
             }
         },
-        ['@media (max-width:767px)']: { 
+        ['@media (max-width:767px)']: {
             height: '25px',
             width: '25px',
         },
@@ -67,13 +67,16 @@ export const useStylesReport = makeStyles({
     reviewReportMain: {},
     reviewReportTitle: {
         color: '#00D084',
-        fontSize: '14px',
-        fontWeight: 'bold',
-        marginBottom: '5px'
+        fontSize: '14px !important',
+        fontWeight: 'bold !important',
+        marginBottom: '5px !important'
     },
     reviewReportQue: {
-        fontSize: '26px',
-        fontWeight: 'bold'
+        fontSize: '26px !important',
+        fontWeight: 'bold !important',
+        ['@media (max-width:640px)']: {
+            fontSize: '22px !important'
+        }
     },
     reviewReportDesc: {},
     reviewReportBlock: {
@@ -85,12 +88,31 @@ export const useStylesReport = makeStyles({
     reviewReportTwoBlock: {
         display: 'flex',
         marginBottom: '30px',
-        gap: '30px'
+        gap: '30px',
+        ['@media (max-width:640px)']: {
+            flexDirection: 'column',
+            gap: '10px'
+        }
     },
     reviewReportTwoBlockSub: {
         width: '50%',
         borderBottom: '1px solid #00D084',
-        paddingBottom: '15px'
+        paddingBottom: '15px',
+        ['@media (max-width:640px)']: {
+            width: '100%'
+        }
+    },
+    happySad: {
+        "& img": {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            marginRight: '15px',
+            marginTop: '5px'
+        },
+        "& p": {
+            display: 'inline-block',
+            verticalAlign: 'top',
+        }
     },
     reviewReportSubpart: {
         borderBottom: '0 !important',

@@ -2,6 +2,9 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useStylesReport } from './style';
+import HappyGreen from '../../public/asset/images/HappyGreen.png';
+import SadGreen from '../../public/asset/images/SadGreen.png';
+import Image from 'next/image'
 
 const ReviewReport = () => {
     const classesReport = useStylesReport();
@@ -24,10 +27,12 @@ const ReviewReport = () => {
                 <Box className={classesReport.reviewReportTwoBlockSub}>
                     <Typography className={classesReport.reviewReportTitle}>Overall Feelings</Typography>
                     <Box className={`${classesReport.reviewReportTwoBlock} ${classesReport.reviewReportSubpart}`}>
-                        <Box className={classesReport.reviewReportTwoBlockSub} style={{ borderBottom: '0', paddingBottom: '0' }}>
+                        <Box className={`${classesReport.reviewReportTwoBlockSub} ${classesReport.happySad}`} style={{ borderBottom: '0', paddingBottom: '0' }}>
+                            <Image src={HappyGreen} />
                             <Typography className={classesReport.reviewReportQue}>5</Typography>
                         </Box>
-                        <Box className={classesReport.reviewReportTwoBlockSub} style={{ borderBottom: '0', paddingBottom: '0' }}>
+                        <Box className={`${classesReport.reviewReportTwoBlockSub} ${classesReport.happySad}`} style={{ borderBottom: '0', paddingBottom: '0' }}>
+                            <Image src={SadGreen} />
                             <Typography className={classesReport.reviewReportQue}>1</Typography>
                         </Box>
                     </Box>

@@ -1,12 +1,18 @@
-import { makeStyles } from '@material-ui/core/styles'; 
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStylesCardSave = makeStyles({
     cardContent: {
-        padding: '25px !important'
+        padding: '25px !important',
+        ['@media (max-width:500px)']: {
+            padding: '25px 15px !important',
+        }
     },
     cardSaveDetailsDateTime: {
         display: 'flex',
-        gap: '15px'
+        gap: '15px',
+        ['@media (max-width:767px)']: {
+            flexDirection: 'column'
+        }
     },
     timeDateTop: {
         display: 'flex',
@@ -15,12 +21,18 @@ export const useStylesCardSave = makeStyles({
     cardSaveDetailsDateTimeFieldTitle: {
         marginBottom: '10px !important',
         fontWeight: '600 !important',
+        ['@media (max-width:500px)']: {
+            fontSize: '15px !important'
+        }
     },
     cardSaveDetailsTitle: {
         fontWeight: 'bold !important',
         borderBottom: '1px solid #cdcdcd',
         paddingBottom: '30px',
-        marginBottom: '25px !important'
+        marginBottom: '25px !important',
+        ['@media (max-width:767px)']: {
+            fontSize: '26px !important'
+        }
     },
     cardSaveDetailsDate: {
         boxShadow: '0px 0px 10px inset',
@@ -87,23 +99,36 @@ export const useStylesCardSave = makeStyles({
     },
     cardSavedMain: {
         textAlign: 'center',
-        padding: '30px'
+        padding: '30px',
+        ['@media (max-width:500px)']: {
+            '& img': {
+                height: '90px',
+                width: '90px'
+            },
+            padding: '15px'
+        }
     },
     cardSavedMainTitle: {
-        margin: '30px 0px',
-        fontSize: '30px',
-        fontWeight: 'bold'
+        margin: '30px 0px !important',
+        fontSize: '30px !important',
+        fontWeight: 'bold !important',
+        ['@media (max-width:500px)']: {
+            fontSize: '23px !important',
+        }
     },
     cardSavedMainDesc: {
-        marginBottom: '50px',
-        fontSize: '18px',
+        marginBottom: '50px !important',
+        fontSize: '18px !important',
+        ['@media (max-width:500px)']: {
+            fontSize: '15px !important',
+        }
     },
     cardSavedMainBtn: {
-        border: '2px solid #bfbfbf',
+        border: '2px solid #bfbfbf !important',
         width: '130px',
-        color: '#808080',
-        textTransform: 'capitalize',
-        fontWeight: 'bold',
-        fontSize: '18px'
+        color: '#808080 !important',
+        textTransform: 'capitalize !important',
+        fontWeight: 'bold !important',
+        fontSize: '18px !important'
     }
 });

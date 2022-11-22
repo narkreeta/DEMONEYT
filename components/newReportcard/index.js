@@ -25,10 +25,10 @@ const style = {
     maxWidth: '90%',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    height: '100%',
-    margin: '2rem auto',
+    height: '90%',
     overflowY: 'scroll',
-    paddingBottom: '30px'
+    paddingBottom: '30px',
+    borderBottom: '5px solid #00D084'
 };
 
 const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
@@ -41,6 +41,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
 
     const handleBack = () => {
         setEdit(false)
+        setOpen(false)
     }
 
     return (

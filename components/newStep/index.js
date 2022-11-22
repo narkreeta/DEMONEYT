@@ -37,10 +37,10 @@ const style = {
     maxWidth: '90%',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    height: '100%',
-    margin: '2rem auto',
+    height: '90%',
     overflowY: 'scroll',
-    paddingBottom: '30px'
+    paddingBottom: '30px',
+    borderBottom: '5px solid #00D084'
 };
 
 const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
@@ -55,7 +55,7 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
         { name: 'Timer', data: [] },
         { name: 'Date', data: [] },
         //{ name: 'Counter', data: ['Attendees', 'Children', 'Adults', 'Boys', 'Girls', 'Over 18', 'Under 18', 'Over 60s'] },
-        { name: 'Counter', data: ['', '']},
+        { name: 'Counter', data: [{ id: Math.random().toString(16).slice(2), value: '' }] },
         { name: 'A / B Choice', data: [] },
         { name: 'Text field', data: [] },
         { name: 'Rating', data: [] }
@@ -96,168 +96,196 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
         setCardSaveDetailsOpen(true);
     }
 
+    const addCounter = () => {
+        let arr = [...addData, addData.filter((data) => data.name == 'Counter' && data.data.push({ id: Math.random().toString(16).slice(2), value: '' }))];
+        arr = arr.filter((data) => data.name);
+        setAddData(arr);
+    }
+
+    const removeCounter = (id) => {
+        // console.log(ind, 'ind')
+        let findInd = addData.filter((val) => val.name === 'Counter')[0].data;
+        let findId = findInd.findIndex((x) => x.id === id);
+        let arr = [...addData, addData.filter((data) => data.name == 'Counter' && data.data.splice(findId, 1))];
+        arr = arr.filter((data) => data.name);
+        setAddData(arr);
+    }
+
+    const handleCounterValue = (id, val) => {
+        let arr = [...addData];
+        let arr2 = arr?.filter((data) => data?.name == 'Counter')?.[0];
+        let getArr = arr2?.data?.filter((data) => data?.id == id)?.[0];
+        getArr['value'] = val
+        setAddData(arr);
+    }
+
+    const handleBack = () => {
+        setStepOpen(false)
+    }
+
     return (
         <>
-        <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={stepOpen}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-                timeout: 500,
-            }}
-        >
-            <Fade in={stepOpen}>
-                <Box sx={style} className={newReportClasses.boxStyle}>
-                    <CardMedia
-                        component="img"
-                        height="150"
-                        image={Banner.src}
-                        alt="Banner"
-                        title="Contemplative Reptile"
-                    />
-                    <Box className={newReportClasses.bannerContent}>
-                        <Typography
-                            gutterBottom
-                            variant="h4"
-                            component="h4"
-                            fontWeight="bold"
-                        >
-                            New report card
-                        </Typography>
-                        <Button className={newReportClasses.bannerContentBtn} onClick={() => handleClose()}>
-                            <HighlightOffIcon style={{ fontSize: '30px' }} />
-                        </Button>
-                    </Box>
-                    <CardContent className={newReportClasses.cardContent}>
-                        <Input placeholder='New report card' className={newReportClasses.inputBox} />
-                        <Typography variant='h5' className={editReportClasses.categoryTitle}>Select your Category & Data Point</Typography>
-                        {addData?.map((ele, index) => {
-                            return (
-                                <Accordion key={ele?.name} className={`${welcomeClasses.accordion} ${classes.accordion} ${ele?.data?.length > 0 ? '' : welcomeClasses.zeroMargin}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
-                                    <div className={classes.accordionSummaryTop} style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}>
-                                        <AccordionSummary
-                                            expandIcon={expanded === `panel${index + 1}` ?
-                                                <AiFillUpCircle className={welcomeClasses.accordionIcon} /> :
-                                                <AddCircleOutlineIcon className={welcomeClasses.accordionIcon} />
-                                            }
-                                            aria-controls={`panel${index + 1}bh-content`}
-                                            id={`panel${index + 1}bh-header`}
-                                            className={`${welcomeClasses.accordionSummary} ${classes.accordionSummary}`}
-                                            style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}
-                                        >
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={stepOpen}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={stepOpen}>
+                    <Box sx={style} className={newReportClasses.boxStyle}>
+                        <CardMedia
+                            component="img"
+                            height="150"
+                            image={Banner.src}
+                            alt="Banner"
+                            title="Contemplative Reptile"
+                        />
+                        <Box className={newReportClasses.bannerContent}>
+                            <Typography
+                                gutterBottom
+                                variant="h4"
+                                component="h4"
+                                fontWeight="bold"
+                            >
+                                New report card
+                            </Typography>
+                            <Button className={newReportClasses.bannerContentBtn} onClick={() => handleClose()}>
+                                <HighlightOffIcon style={{ fontSize: '30px' }} />
+                            </Button>
+                        </Box>
+                        <CardContent className={newReportClasses.cardContent}>
+                            <Input placeholder='New report card' className={newReportClasses.inputBox} />
+                            <Typography variant='h5' className={editReportClasses.categoryTitle}>Select your Category & Data Point</Typography>
+                            {addData?.map((ele, index) => {
+                                return (
+                                    <Accordion key={ele?.name} className={`${welcomeClasses.accordion} ${classes.accordion} ${ele?.data?.length > 0 ? '' : welcomeClasses.zeroMargin}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
+                                        <div className={classes.accordionSummaryTop} style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}>
+                                            <AccordionSummary
+                                                expandIcon={expanded === `panel${index + 1}` ?
+                                                    <AiFillUpCircle className={welcomeClasses.accordionIcon} /> :
+                                                    <AddCircleOutlineIcon className={welcomeClasses.accordionIcon} />
+                                                }
+                                                aria-controls={`panel${index + 1}bh-content`}
+                                                id={`panel${index + 1}bh-header`}
+                                                className={`${welcomeClasses.accordionSummary} ${classes.accordionSummary}`}
+                                                style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}
+                                            >
 
-                                        </AccordionSummary>
-                                        <div className={classes.accordionSummaryRight}>
-                                            <div className={classes.accordionSummaryData}>
-                                                <Typography className={welcomeClasses.accordionHeadContent}>
-                                                    {ele?.name}
-                                                </Typography>
-                                                {ele?.name == 'Timer' &&
-                                                    <Box className={classes.summaryRight}>
-                                                        <Input className={classes.summaryRightInput} />
-                                                        <Input className={classes.summaryRightInput} />
-                                                    </Box>
-                                                }
-                                                {ele?.name == 'Date' &&
-                                                    <Box className={classes.summaryRight}>
-                                                        <Input className={classes.summaryRightInput} />
-                                                        <Input className={classes.summaryRightInput} />
-                                                        <Input className={classes.summaryRightInput} />
-                                                    </Box>
-                                                }
-                                                {ele?.name == 'Counter' &&
-                                                    <Box className={classes.summaryRight}>
-                                                    <div className={`${classesSteps.countPlusMinus} ${classes.counterSection}`}>
-                                                        <div className={classesSteps.countPlusMinusSub}>
-                                                            <RemoveCircleOutlineIcon onClick={decrement} />
-                                                        </div>
+                                            </AccordionSummary>
+                                            <div className={classes.accordionSummaryRight}>
+                                                <div className={classes.accordionSummaryData}>
+                                                    <Typography className={`${welcomeClasses.accordionHeadContent} ${classes.accordionHeadContent}`}>
+                                                        {ele?.name}
+                                                    </Typography>
+                                                    {ele?.name == 'Timer' &&
+                                                        <Box className={classes.summaryRight}>
+                                                            <Input className={classes.summaryRightInput} />
+                                                            <Input className={classes.summaryRightInput} />
+                                                        </Box>
+                                                    }
+                                                    {ele?.name == 'Date' &&
+                                                        <Box className={classes.summaryRight}>
+                                                            <Input className={classes.summaryRightInput} />
+                                                            <Input className={classes.summaryRightInput} />
+                                                            <Input className={classes.summaryRightInput} />
+                                                        </Box>
+                                                    }
+                                                    {ele?.name == 'Counter' &&
+                                                        <Box className={classes.summaryRight}>
+                                                            <div className={`${classesSteps.countPlusMinus} ${classes.counterSection}`}>
+                                                                <div className={classesSteps.countPlusMinusSub}>
+                                                                    <RemoveCircleOutlineIcon onClick={decrement} />
+                                                                </div>
 
-                                                        <div className={classesSteps.countPlusMinusSub} style={{ borderLeft: '1px solid #bfbfbf', borderRight: '1px solid #bfbfbf' }}>
-                                                            <Box className={`${classesSteps.counterSection}`}>
-                                                                <Box className={`${classesSteps.counterTop} ${classesSteps.counterTopAbove} ${classes.counterTopAbove}`}>
-                                                                    {count !== lowerLimit ? count - 1 : ''}
-                                                                </Box>
-                                                                <Box className={`${classesSteps.counterTop} ${classes.counterTop}`}>
-                                                                    {count !== lowerLimit ? count - 1 : ''}
-                                                                </Box>
-                                                                <Box className={`${classesSteps.counterMiddle} ${classes.counterMiddle}`}>
-                                                                    {count}
-                                                                </Box>
-                                                                <Box className={`${classesSteps.counterBottom} ${classes.counterBottom}`}>
-                                                                    {count !== upperLimit ? count + 1 : ''}
-                                                                </Box>
-                                                                <Box className={`${classesSteps.counterBottom} ${classesSteps.counterBottomBelow} ${classes.counterBottomBelow}`}>
-                                                                    {count !== upperLimit ? count + 1 : ''}
-                                                                </Box>
-                                                            </Box>
-                                                        </div>
-                                                        <div className={classesSteps.countPlusMinusSub}>
-                                                            <ControlPointIcon onClick={increment} />
-                                                        </div>
-                                                    </div>
-                                                    </Box>
-                                                }
-                                                {ele?.name == 'A / B Choice' &&
-                                                    <Box className={classes.summaryRight}>
-                                                        <div className={classes.happySad} style={{ borderRight: '1px solid rgb(191, 191, 191)' }} ><Image src={Happy} /></div>
-                                                        <div className={classes.happySad}><Image src={Sad} /></div>
-                                                    </Box>
-                                                }
-                                                {ele?.name == 'Text field' &&
-                                                    <Box className={classes.summaryRight}>
-                                                        <Input className={classes.summaryRightInput} />
-                                                    </Box>
-                                                }
+                                                                <div className={classesSteps.countPlusMinusSub} style={{ borderLeft: '1px solid #bfbfbf', borderRight: '1px solid #bfbfbf' }}>
+                                                                    <Box className={`${classesSteps.counterSection}`}>
+                                                                        <Box className={`${classesSteps.counterTop} ${classesSteps.counterTopAbove} ${classes.counterTopAbove}`}>
+                                                                            {count !== lowerLimit ? count - 1 : ''}
+                                                                        </Box>
+                                                                        <Box className={`${classesSteps.counterTop} ${classes.counterTop}`}>
+                                                                            {count !== lowerLimit ? count - 1 : ''}
+                                                                        </Box>
+                                                                        <Box className={`${classesSteps.counterMiddle} ${classes.counterMiddle}`}>
+                                                                            {count}
+                                                                        </Box>
+                                                                        <Box className={`${classesSteps.counterBottom} ${classes.counterBottom}`}>
+                                                                            {count !== upperLimit ? count + 1 : ''}
+                                                                        </Box>
+                                                                        <Box className={`${classesSteps.counterBottom} ${classesSteps.counterBottomBelow} ${classes.counterBottomBelow}`}>
+                                                                            {count !== upperLimit ? count + 1 : ''}
+                                                                        </Box>
+                                                                    </Box>
+                                                                </div>
+                                                                <div className={classesSteps.countPlusMinusSub}>
+                                                                    <ControlPointIcon onClick={increment} />
+                                                                </div>
+                                                            </div>
+                                                        </Box>
+                                                    }
+                                                    {ele?.name == 'A / B Choice' &&
+                                                        <Box className={classes.summaryRight}>
+                                                            <div className={classes.happySad} style={{ borderRight: '1px solid rgb(191, 191, 191)' }} ><Image src={Happy} /></div>
+                                                            <div className={classes.happySad}><Image src={Sad} /></div>
+                                                        </Box>
+                                                    }
+                                                    {ele?.name == 'Text field' &&
+                                                        <Box className={classes.summaryRight}>
+                                                            <Input className={classes.summaryRightInput} />
+                                                        </Box>
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {/* <Box className={classes.summaryRight}>
+                                        {/* <Box className={classes.summaryRight}>
                                         <Input className={classes.summaryRightInput} />
                                         <Input className={classes.summaryRightInput} />
                                     </Box> */}
-                                    <AccordionDetails className={editReportClasses.accordionDetails}>
-                                        {ele?.data?.map((data, ind) => {
-                                            return (
-                                                <>
-                                                    {ele?.name == 'Counter' &&
-                                                        // <Box className={`${editReportClasses.accordionDetailsBox} ${counterData?.includes(data) ? editReportClasses.accordionDetailsBoxActive : ''}`} onClick={() => handleSubcontent(data)}>
-                                                        //     <Typography style={{ fontWeight: 'bold' }}>{data}</Typography>
-                                                        // </Box>
-                                                        <Box className={classes.counterMain}>
-                                                            <Box className={classes.counterLeft}>
-                                                                <Box className={newReportClasses.reportDataIcon}>
-                                                                    <RiArrowUpDownFill color='#00D084' />
+                                        <AccordionDetails className={`${editReportClasses.accordionDetails} ${classes.accordionDetails}`}>
+                                            {ele?.data?.map((data, ind) => {
+                                                console.log(ele?.data?.length, 'ele?.data?.length')
+                                                return (
+                                                    <>
+                                                        {ele?.name == 'Counter' &&
+                                                            // <Box className={`${editReportClasses.accordionDetailsBox} ${counterData?.includes(data) ? editReportClasses.accordionDetailsBoxActive : ''}`} onClick={() => handleSubcontent(data)}>
+                                                            //     <Typography style={{ fontWeight: 'bold' }}>{data}</Typography>
+                                                            // </Box>
+                                                            <Box className={classes.counterMain}>
+                                                                <Box className={classes.counterLeft}>
+                                                                    <Box className={newReportClasses.reportDataIcon}>
+                                                                        <RiArrowUpDownFill color='#00D084' />
+                                                                    </Box>
+                                                                    <Typography className={classes.counterLeftContent}> <Input onChange={(e) => handleCounterValue(data?.id, e.target.value)} value={data?.value} className={classes.counterInput} placeholder='Counter name' /> </Typography>
                                                                 </Box>
-                                                                <Typography className={classes.counterLeftContent}> Counter name </Typography>
+                                                                <Box className={`${classes.counterRight} ${ele?.data?.length - 1 == ind && classes.counterRightActive}`}>
+                                                                    {ele?.data?.length - 1 == ind && <Typography onClick={() => addCounter()}> Add </Typography>}
+                                                                    <Typography onClick={() => removeCounter(data?.id)}> Remove </Typography>
+                                                                </Box>
                                                             </Box>
-                                                            <Box className={classes.counterRight}>
-                                                                <Typography> Add </Typography>
-                                                                <Typography> Remove </Typography>
-                                                            </Box>
-                                                        </Box>
-                                                    }
-                                                </>
-                                            )
-                                        })}
-                                    </AccordionDetails>
-                                </Accordion>
-                            )
-                        })}
-                        <Box className={newReportClasses.btnPart}>
-                            <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`} onClick={() => handleBack()}>Back</Button>
-                            <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`} onClick={() => handleSave()}>Save</Button>
-                        </Box>
-                    </CardContent>
-                </Box>
-            </Fade>
-        </Modal>
-        <CardSaveDetails 
-            cardSaveDetailsOpen={cardSaveDetailsOpen} 
-            setCardSaveDetailsOpen={setCardSaveDetailsOpen} 
-        />
+                                                        }
+                                                    </>
+                                                )
+                                            })}
+                                        </AccordionDetails>
+                                    </Accordion>
+                                )
+                            })}
+                            <Box className={newReportClasses.btnPart}>
+                                <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`} onClick={() => handleBack()}>Back</Button>
+                                <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`} onClick={() => handleSave()}>Save</Button>
+                            </Box>
+                        </CardContent>
+                    </Box>
+                </Fade>
+            </Modal>
+            <CardSaveDetails
+                cardSaveDetailsOpen={cardSaveDetailsOpen}
+                setCardSaveDetailsOpen={setCardSaveDetailsOpen}
+            />
         </>
     )
 }
