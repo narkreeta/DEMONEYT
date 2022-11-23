@@ -13,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useStyles } from "./style"; 
 
-const Header = () => {
+const Login = () => {
   const classes = useStyles(); 
   const [values, setValues] = useState({userName: '', passWord: '', showPassword: false});
 
@@ -82,4 +82,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Login
