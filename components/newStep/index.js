@@ -28,6 +28,10 @@ import Image from 'next/image'
 import { RiArrowUpDownFill } from 'react-icons/ri';
 import CardSaveDetails from '../cardSave/cardSaveDetails';
 
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -43,7 +47,7 @@ const style = {
     borderBottom: '5px solid #00D084'
 };
 
-const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
+const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState, state }) => {
     const newReportClasses = useStylesNewreport();
     const editReportClasses = useStylesEdit();
     const welcomeClasses = useStylesWelcome();
@@ -62,11 +66,16 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
     ]);
     const [counterData, setCounterData] = useState([]);
     const [expanded, setExpanded] = useState('');
-    const [cardSaveDetailsOpen, setCardSaveDetailsOpen] = useState(false);
 
     const upperLimit = 10;
     const lowerLimit = 0;
     const [count, setCount] = useState(lowerLimit);
+    const [value, setValue] = useState('');
+    const [stepName, setStepName] = useState('');
+
+    const handleRadio = (event) => {
+        setValue(event.target.value);
+    };
 
     const increment = () => {
         if (count < upperLimit)
@@ -93,7 +102,11 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
     }
 
     const handleSave = () => {
-        setCardSaveDetailsOpen(true);
+        value !== '' && setState([...state, {name: stepName,  type: value}]);
+        setStepName('');
+        setValue('');
+        handleClose();
+        //setCardSaveDetailsOpen(true);
     }
 
     const addCounter = () => {
@@ -158,14 +171,21 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
                                 <HighlightOffIcon style={{ fontSize: '30px' }} />
                             </Button>
                         </Box>
-                        <CardContent className={newReportClasses.cardContent}>
-                            <Input placeholder='New report card' className={newReportClasses.inputBox} />
+                        <CardContent className={`${newReportClasses.cardContent} ${classes.cardContent}`}>
+                            <Input value={stepName} onChange={(e) => setStepName(e.target.value)} placeholder='Step Name' className={newReportClasses.inputBox} />
+
                             <Typography variant='h5' className={editReportClasses.categoryTitle}>Select your Category & Data Point</Typography>
-                            {addData?.map((ele, index) => {
-                                return (
-                                    <Accordion key={ele?.name} className={`${welcomeClasses.accordion} ${classes.accordion} ${ele?.data?.length > 0 ? '' : welcomeClasses.zeroMargin}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
-                                        <div className={classes.accordionSummaryTop} style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}>
-                                            <AccordionSummary
+                            <RadioGroup
+                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                name="controlled-radio-buttons-group"
+                                value={value}
+                                onChange={handleRadio}
+                            >
+                                {addData?.map((ele, index) => {
+                                    return (
+                                        <Accordion key={ele?.name} className={`${welcomeClasses.accordion} ${classes.accordion} ${ele?.data?.length > 0 ? '' : welcomeClasses.zeroMargin}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
+                                            <div className={classes.accordionSummaryTop} style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}>
+                                                {/* <AccordionSummary
                                                 expandIcon={expanded === `panel${index + 1}` ?
                                                     <AiFillUpCircle className={welcomeClasses.accordionIcon} /> :
                                                     <AddCircleOutlineIcon className={welcomeClasses.accordionIcon} />
@@ -176,76 +196,77 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
                                                 style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}
                                             >
 
-                                            </AccordionSummary>
-                                            <div className={classes.accordionSummaryRight}>
-                                                <div className={classes.accordionSummaryData}>
-                                                    <Typography className={`${welcomeClasses.accordionHeadContent} ${classes.accordionHeadContent}`}>
-                                                        {ele?.name}
-                                                    </Typography>
-                                                    {ele?.name == 'Timer' &&
-                                                        <Box className={classes.summaryRight}>
-                                                            <Input className={classes.summaryRightInput} />
-                                                            <Input className={classes.summaryRightInput} />
-                                                        </Box>
-                                                    }
-                                                    {ele?.name == 'Date' &&
-                                                        <Box className={classes.summaryRight}>
-                                                            <Input className={classes.summaryRightInput} />
-                                                            <Input className={classes.summaryRightInput} />
-                                                            <Input className={classes.summaryRightInput} />
-                                                        </Box>
-                                                    }
-                                                    {ele?.name == 'Counter' &&
-                                                        <Box className={classes.summaryRight}>
-                                                            <div className={`${classesSteps.countPlusMinus} ${classes.counterSection}`}>
-                                                                <div className={classesSteps.countPlusMinusSub}>
-                                                                    <RemoveCircleOutlineIcon onClick={decrement} />
-                                                                </div>
+                                            </AccordionSummary> */}
+                                            <FormControlLabel value={ele?.name} control={<Radio />} /> 
+                                                <div className={classes.accordionSummaryRight}>
+                                                    <div className={classes.accordionSummaryData}>
+                                                        <Typography className={`${welcomeClasses.accordionHeadContent} ${classes.accordionHeadContent}`}>
+                                                            {ele?.name}
+                                                        </Typography>
+                                                        {ele?.name == 'Timer' &&
+                                                            <Box className={classes.summaryRight}>
+                                                                <Input className={classes.summaryRightInput} disabled />
+                                                                <Input className={classes.summaryRightInput} disabled />
+                                                            </Box>
+                                                        }
+                                                        {ele?.name == 'Date' &&
+                                                            <Box className={classes.summaryRight}>
+                                                                <Input className={classes.summaryRightInput} disabled />
+                                                                <Input className={classes.summaryRightInput} disabled />
+                                                                <Input className={classes.summaryRightInput} disabled />
+                                                            </Box>
+                                                        }
+                                                        {ele?.name == 'Counter' &&
+                                                            <Box className={classes.summaryRight}>
+                                                                <div className={`${classesSteps.countPlusMinus} ${classes.counterSection}`}>
+                                                                    <div className={classesSteps.countPlusMinusSub}>
+                                                                        <RemoveCircleOutlineIcon style={{ cursor: 'default' }} />
+                                                                    </div>
 
-                                                                <div className={classesSteps.countPlusMinusSub} style={{ borderLeft: '1px solid #bfbfbf', borderRight: '1px solid #bfbfbf' }}>
-                                                                    <Box className={`${classesSteps.counterSection}`}>
-                                                                        <Box className={`${classesSteps.counterTop} ${classesSteps.counterTopAbove} ${classes.counterTopAbove}`}>
-                                                                            {count !== lowerLimit ? count - 1 : ''}
+                                                                    <div className={classesSteps.countPlusMinusSub} style={{ borderLeft: '1px solid #bfbfbf', borderRight: '1px solid #bfbfbf' }}>
+                                                                        <Box className={`${classesSteps.counterSection}`}>
+                                                                            <Box className={`${classesSteps.counterTop} ${classesSteps.counterTopAbove} ${classes.counterTopAbove}`}>
+                                                                                {count !== lowerLimit ? count - 1 : ''}
+                                                                            </Box>
+                                                                            <Box className={`${classesSteps.counterTop} ${classes.counterTop}`}>
+                                                                                {count !== lowerLimit ? count - 1 : ''}
+                                                                            </Box>
+                                                                            <Box className={`${classesSteps.counterMiddle} ${classes.counterMiddle}`}>
+                                                                                {count}
+                                                                            </Box>
+                                                                            <Box className={`${classesSteps.counterBottom} ${classes.counterBottom}`}>
+                                                                                {count !== upperLimit ? count + 1 : ''}
+                                                                            </Box>
+                                                                            <Box className={`${classesSteps.counterBottom} ${classesSteps.counterBottomBelow} ${classes.counterBottomBelow}`}>
+                                                                                {count !== upperLimit ? count + 1 : ''}
+                                                                            </Box>
                                                                         </Box>
-                                                                        <Box className={`${classesSteps.counterTop} ${classes.counterTop}`}>
-                                                                            {count !== lowerLimit ? count - 1 : ''}
-                                                                        </Box>
-                                                                        <Box className={`${classesSteps.counterMiddle} ${classes.counterMiddle}`}>
-                                                                            {count}
-                                                                        </Box>
-                                                                        <Box className={`${classesSteps.counterBottom} ${classes.counterBottom}`}>
-                                                                            {count !== upperLimit ? count + 1 : ''}
-                                                                        </Box>
-                                                                        <Box className={`${classesSteps.counterBottom} ${classesSteps.counterBottomBelow} ${classes.counterBottomBelow}`}>
-                                                                            {count !== upperLimit ? count + 1 : ''}
-                                                                        </Box>
-                                                                    </Box>
+                                                                    </div>
+                                                                    <div className={classesSteps.countPlusMinusSub}>
+                                                                        <ControlPointIcon style={{ cursor: 'default' }} />
+                                                                    </div>
                                                                 </div>
-                                                                <div className={classesSteps.countPlusMinusSub}>
-                                                                    <ControlPointIcon onClick={increment} />
-                                                                </div>
-                                                            </div>
-                                                        </Box>
-                                                    }
-                                                    {ele?.name == 'A / B Choice' &&
-                                                        <Box className={classes.summaryRight}>
-                                                            <div className={classes.happySad} style={{ borderRight: '1px solid rgb(191, 191, 191)' }} ><Image src={Happy} /></div>
-                                                            <div className={classes.happySad}><Image src={Sad} /></div>
-                                                        </Box>
-                                                    }
-                                                    {ele?.name == 'Text field' &&
-                                                        <Box className={classes.summaryRight}>
-                                                            <Input className={classes.summaryRightInput} />
-                                                        </Box>
-                                                    }
+                                                            </Box>
+                                                        }
+                                                        {ele?.name == 'A / B Choice' &&
+                                                            <Box className={classes.summaryRight}>
+                                                                <div className={classes.happySad} style={{ borderRight: '1px solid rgb(191, 191, 191)' }} ><Image src={Happy} /></div>
+                                                                <div className={classes.happySad}><Image src={Sad} /></div>
+                                                            </Box>
+                                                        }
+                                                        {ele?.name == 'Text field' &&
+                                                            <Box className={classes.summaryRight}>
+                                                                <Input className={classes.summaryRightInput} />
+                                                            </Box>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        {/* <Box className={classes.summaryRight}>
+                                            {/* <Box className={classes.summaryRight}>
                                         <Input className={classes.summaryRightInput} />
                                         <Input className={classes.summaryRightInput} />
                                     </Box> */}
-                                        <AccordionDetails className={`${editReportClasses.accordionDetails} ${classes.accordionDetails}`}>
+                                            {/* <AccordionDetails className={`${editReportClasses.accordionDetails} ${classes.accordionDetails}`}>
                                             {ele?.data?.map((data, ind) => {
                                                 console.log(ele?.data?.length, 'ele?.data?.length')
                                                 return (
@@ -270,10 +291,11 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
                                                     </>
                                                 )
                                             })}
-                                        </AccordionDetails>
-                                    </Accordion>
-                                )
-                            })}
+                                        </AccordionDetails> */}
+                                        </Accordion>
+                                    )
+                                })}
+                            </RadioGroup>
                             <Box className={newReportClasses.btnPart}>
                                 <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`} onClick={() => handleBack()}>Back</Button>
                                 <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`} onClick={() => handleSave()}>Save</Button>
@@ -282,10 +304,6 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData }) => {
                     </Box>
                 </Fade>
             </Modal>
-            <CardSaveDetails
-                cardSaveDetailsOpen={cardSaveDetailsOpen}
-                setCardSaveDetailsOpen={setCardSaveDetailsOpen}
-            />
         </>
     )
 }

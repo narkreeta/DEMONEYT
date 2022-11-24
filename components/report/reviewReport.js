@@ -6,11 +6,12 @@ import HappyGreen from '../../public/asset/images/HappyGreen.png';
 import SadGreen from '../../public/asset/images/SadGreen.png';
 import Image from 'next/image'
 
-const ReviewReport = () => {
+const ReviewReport = ({ stepQueAns }) => {
+    console.log(stepQueAns, 'stepQueAns inside')
     const classesReport = useStylesReport();
     return (
         <Box>
-            <Typography className={classesReport.reviewReportTitle}>Adults & Children</Typography>
+            {/* <Typography className={classesReport.reviewReportTitle}>Adults & Children</Typography>
             <Box className={classesReport.reviewReportTwoBlock}>
                 <Box className={classesReport.reviewReportTwoBlockSub}>
                     <Typography className={classesReport.reviewReportQue}>Adults: 5</Typography>
@@ -41,17 +42,18 @@ const ReviewReport = () => {
                     <Typography className={classesReport.reviewReportTitle}>Event Costs</Typography>
                     <Typography className={classesReport.reviewReportQue}>$148.50</Typography>
                 </Box>
-            </Box>
+            </Box> */}
             <Box className={classesReport.reviewReportTwoBlock}>
-                <Box className={classesReport.reviewReportTwoBlockSub}>
-                    <Typography className={classesReport.reviewReportTitle}>Event Start Time</Typography>
-                    <Typography className={classesReport.reviewReportQue}>10:50am</Typography>
-                </Box>
-                <Box className={classesReport.reviewReportTwoBlockSub}>
-                    <Typography className={classesReport.reviewReportTitle}>Event End Time</Typography>
-                    <Typography className={classesReport.reviewReportQue}>11:43am</Typography>
-                </Box>
+                {stepQueAns?.map((data) => {
+                    return (
+                        <Box className={classesReport.reviewReportTwoBlockSub}>
+                            <Typography className={classesReport.reviewReportTitle}>{data?.type}</Typography>
+                            <Typography className={classesReport.reviewReportQue}>{`${data?.name}: ${data?.ans}`}</Typography>
+                        </Box>
+                    )
+                })}
             </Box>
+
         </Box>
     )
 }

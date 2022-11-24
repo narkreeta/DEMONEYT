@@ -43,7 +43,7 @@ const WelcomeIndex = () => {
 
     const handleSubcontent = (data) => {
         data == 'New report card' && setOpen(true);
-        data == 'Continue last report card' && setReportOpen(true);
+        //data == 'Continue last report card' && setReportOpen(true);
     }
 
     return (
@@ -113,7 +113,7 @@ const WelcomeIndex = () => {
                 stepsData={stepsData}
                 setStepsData={setStepsData}
             />
-            <ReportIndex reportOpen={reportOpen} setReportOpen={setReportOpen} />
+            {/* <ReportIndex reportOpen={reportOpen} setReportOpen={setReportOpen} /> */}
         </div>
     )
 }

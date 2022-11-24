@@ -15,6 +15,7 @@ import AddIcon from '@mui/icons-material/Add';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Edit from './edit';
 import NewstepIndex from '../newStep';
+import CardSaveDetails from '../cardSave/cardSaveDetails';
 
 const style = {
     position: 'absolute',
@@ -34,15 +35,23 @@ const style = {
 const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
     const classes = useStylesNewreport();
     const handleClose = () => setOpen(false);
-    const [state, setState] = useState(['Step1']);
+    const [state, setState] = useState([]);
     const [edit, setEdit] = useState(false);
     const [reportName, setReportName] = useState('');
     const [stepOpen, setStepOpen] = useState(false);
+    const [cardSaveDetailsOpen, setCardSaveDetailsOpen] = useState(false);
 
     const handleBack = () => {
         setEdit(false)
         setOpen(false)
     }
+
+    const handleSave = () => {
+        setCardSaveDetailsOpen(true);
+        localStorage.setItem("ReportCard", JSON.stringify({name: reportName, step: state}));
+    }
+
+    console.log(state, 'state indx')
 
     return (
         <>
@@ -91,7 +100,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                                                 <Box className={classes.reportDataIcon}>
                                                     <RiArrowUpDownFill color='#00D084' />
                                                 </Box>
-                                                <Typography style={{ fontWeight: 'bold' }}>{data}: Tap to edit</Typography>
+                                                <Typography style={{ fontWeight: 'bold' }}>{data?.name}: Tap to edit</Typography>
                                             </div>
                                             <Typography className={classes.reportDataBtn} onClick={() => setEdit(true)}>Edit</Typography>
                                         </Box>
@@ -101,23 +110,29 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                                     <Box className={classes.reportDataIcon} onClick={() => setStepOpen(true)}>
                                         <AddIcon color='#00D084' />
                                     </Box>
-                                    <Typography>Add another step</Typography>
+                                    <Typography>Add {state?.length > 0 ? 'Another Step' : 'First Step'}</Typography>
                                 </Box>
                             </>
                         }
                         <Box className={classes.btnPart}>
                             <Button className={`${classes.btnPartBtn} ${classes.backBtn}`} onClick={() => handleBack()}>Back</Button>
-                            <Button className={`${classes.btnPartBtn} ${classes.saveBtn}`}>Save</Button>
+                            <Button className={`${classes.btnPartBtn} ${classes.saveBtn}`} onClick={() => handleSave()}>Save</Button>
                         </Box>
                     </CardContent>
                 </Box>
             </Fade>
         </Modal>
-        <NewstepIndex 
+        <NewstepIndex
             stepOpen={stepOpen} 
             setStepOpen={setStepOpen} 
             stepsData={stepsData}
             setStepsData={setStepsData}
+            state={state}
+            setState={setState}
+        />
+        <CardSaveDetails 
+            cardSaveDetailsOpen={cardSaveDetailsOpen}
+            setCardSaveDetailsOpen={setCardSaveDetailsOpen}
         />
         </>
     )

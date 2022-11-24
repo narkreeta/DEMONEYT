@@ -31,6 +31,7 @@ export const useStylesNewstep = makeStyles({
         }
     },
     accordionHeadContent: {
+        marginLeft: '0px !important',
         ['@media (max-width:500px)']: {
             marginLeft: '0 !important',
             marginBottom: '10px !important'
@@ -158,6 +159,11 @@ export const useStylesNewstep = makeStyles({
     counterInput: {
         "&:before, &:after": {
             content: 'none !important'
+        }
+    },
+    cardContent: {
+        "& .Mui-checked": {
+            color: '#00D084 !important'
         }
     }
 });

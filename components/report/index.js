@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
@@ -39,10 +39,15 @@ const style = {
 const ReportIndex = ({ reportOpen, setReportOpen }) => {
   const classesNewreport = useStylesNewreport();
   const classesReport = useStylesReport();
-  const steps = ['', '', '', ''];
+ 
   const [activeStep, setActiveStep] = useState(0);
+  const [activeStepData, setActiveStepData] = useState('');
   const [skipped, setSkipped] = React.useState(new Set());
   const [reportSaved, setReportSaved] = useState(false);
+  const [reportName, setReportName] = useState('');
+  const [stepData, setStepData] = useState([]);
+  const [stepQueAns, setStepQueAns] = useState([]);
+  const steps = stepData;
   const handleClose = () => setReportOpen(false);
 
   const isStepOptional = (step) => {
@@ -86,6 +91,23 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
 
   console.log(activeStep, 'activeStep');
 
+  useEffect(() => {
+    if(localStorage != undefined){
+      let data = localStorage != undefined ? JSON.parse(localStorage.getItem("ReportCard")) : '';
+      setReportName(data?.name);
+      setStepData(data?.step);
+    }
+  }, []);
+
+  useEffect(() => {
+    setActiveStepData(steps?.filter((data, ind) => ind == activeStep)?.[0]);
+  }, [activeStep, steps]);
+
+  console.log(activeStepData, 'activeStepData');
+  console.log(steps, 'steps');
+
+  console.log(stepQueAns, 'stepQueAns')
+
   return (
     <>
     <Modal
@@ -116,12 +138,15 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
               fontWeight="bold"
             >
               {activeStep === steps.length ? (
-                <>
+                <div className={classesReport.bannerTitle}>
                   <Typography>Review your report</Typography>
-                  <Typography variant='h5'>NSW January Art Class</Typography>
-                </>
+                  <Typography>{reportName}</Typography>
+                </div>
               ) : (
-                <Typography>Making a report:</Typography>
+                <div className={classesReport.bannerTitle}>
+                  <Typography>Making a report: <span style={{ fontWeight: 'bold' }}>{reportName}</span></Typography>
+                  <Typography>{activeStepData?.name} {activeStepData?.type}</Typography>
+                </div>
               )
               }
             </Typography>
@@ -146,8 +171,8 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
                       stepProps.completed = false;
                     }
                     return (
-                      <Step key={label} {...stepProps} style={{ padding: '0' }} className={classesReport.stepperIcon}>
-                        <StepLabel {...labelProps}>{label}</StepLabel>
+                      <Step key={label?.name} {...stepProps} style={{ padding: '0' }} className={classesReport.stepperIcon}>
+                        <StepLabel {...labelProps}></StepLabel>
                       </Step>
                     );
                   })}
@@ -155,7 +180,7 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
               </Box>}
               {activeStep === steps.length ? (
                 <>
-                  <ReviewReport />
+                  <ReviewReport stepQueAns={stepQueAns} />
                   <Box className={classesNewreport.btnPart}>
                     <Button
                       color="inherit"
@@ -173,10 +198,35 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
               ) : (
                 <React.Fragment>
                   {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
-                  {activeStep == 0 && <AdultsChildren />}
+                  {/* {activeStep == 0 && <AdultsChildren />}
                   {activeStep == 1 && <EventRate />}
                   {activeStep == 2 && <Feedback />}
-                  {activeStep == 3 && <Form />}
+                  {activeStep == 3 && <Form />} */}
+                  {activeStepData?.type == 'Timer' && 'Timer'}
+                  {activeStepData?.type == 'Date' && 'Date'}
+                  {activeStepData?.type == 'Counter' && 
+                    <AdultsChildren 
+                      title={activeStepData?.name} 
+                      stepQueAns={stepQueAns} 
+                      setStepQueAns={setStepQueAns} 
+                      activeStepData={activeStepData}
+                    />}
+                  {activeStepData?.type == 'Rating' && 
+                    <EventRate 
+                      title={activeStepData?.name} 
+                      stepQueAns={stepQueAns} 
+                      setStepQueAns={setStepQueAns} 
+                      activeStepData={activeStepData}
+                    />}
+                  {activeStepData?.type == 'Text field' && 
+                    <Feedback 
+                      title={activeStepData?.name} 
+                      stepQueAns={stepQueAns} 
+                      setStepQueAns={setStepQueAns} 
+                      activeStepData={activeStepData}
+                    />}
+                  {activeStepData?.type == 'A / B Choice' && 'A / B Choice'}
+                  {/* {activeStepData?.type == 'A / B Choice' && <Form title={activeStepData?.name} stepQueAns={stepQueAns} setStepQueAns={setStepQueAns} />} */}
                   <Box className={classesNewreport.btnPart}>
                     <Button
                       color="inherit"

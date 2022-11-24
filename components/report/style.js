@@ -39,7 +39,9 @@ export const useStylesReport = makeStyles({
             paddingRight: '0 !important'
         },
         "& svg": {
-            color: 'transparent'
+            color: 'transparent',
+            height: '25px',
+            width: '25px'
         },
         "& span.Mui-active svg": {
             color: '#00D084',
@@ -62,6 +64,10 @@ export const useStylesReport = makeStyles({
         ['@media (max-width:767px)']: {
             height: '25px',
             width: '25px',
+            "& svg": {
+                height: '15px',
+                width: '15px'
+            }
         },
     },
     reviewReportMain: {},
@@ -89,13 +95,14 @@ export const useStylesReport = makeStyles({
         display: 'flex',
         marginBottom: '30px',
         gap: '30px',
+        flexFlow: 'column',
         ['@media (max-width:640px)']: {
             flexDirection: 'column',
             gap: '10px'
         }
     },
     reviewReportTwoBlockSub: {
-        width: '50%',
+        //width: '50%',
         borderBottom: '1px solid #00D084',
         paddingBottom: '15px',
         ['@media (max-width:640px)']: {
@@ -117,5 +124,15 @@ export const useStylesReport = makeStyles({
     reviewReportSubpart: {
         borderBottom: '0 !important',
         marginBottom: '0 !important',
+    },
+    bannerTitle: {
+        '& p:nth-child(1)': {
+            fontSize: '20px',
+        },
+        '& p:nth-child(2)': {
+            fontSize: '26px',
+            fontWeight: 'bold',
+            textTransform: 'capitalize'
+        },
     }
 });

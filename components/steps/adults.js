@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useStyleSteps } from './style';
@@ -6,7 +6,7 @@ import { useStyleSteps } from './style';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
-const Adults = () => {
+const Adults = ({title, stepQueAns, setStepQueAns, activeStepData}) => {
     const classesSteps = useStyleSteps();
     // const [number, setNumber] = useState(0);
 
@@ -21,7 +21,10 @@ const Adults = () => {
 
     const upperLimit = 10;
     const lowerLimit = 0;
-    const [count, setCount] = useState(lowerLimit);
+    const [count, setCount] = useState(
+        stepQueAns.filter((val) => val?.type == 'Counter')?.[0]?.ans ? 
+        stepQueAns.filter((val) => val?.type == 'Counter')?.[0]?.ans : lowerLimit
+    );
 
     const increment = () => {
         if(count < upperLimit)
@@ -33,10 +36,23 @@ const Adults = () => {
             setCount(_count => _count - 1)
     }
 
+    useEffect(() => {
+        let data = stepQueAns?.map((data) => data?.type);
+        if (data.includes('Counter')){
+            let arr = [...stepQueAns];
+            let arr2 = arr.filter((val) => val?.type == 'Counter')?.[0];
+            arr2['ans'] = count;
+            setStepQueAns(arr)
+        }
+        else {
+            setStepQueAns([...stepQueAns, {name: activeStepData?.name, type: activeStepData?.type, ans: count}])
+        }
+    }, [count]);
+
     return (
         <Box className={classesSteps.adultsChildren}>
             <Typography variant='h5' className={classesSteps.adultsChildrenLeft} >
-                Adults
+                {title}
             </Typography>
             <Box className={classesSteps.adultsChildrenRight}>
                 <div className={classesSteps.countPlusMinus}>
