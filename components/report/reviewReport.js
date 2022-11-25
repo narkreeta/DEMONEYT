@@ -48,7 +48,7 @@ const ReviewReport = ({ stepQueAns }) => {
                     return (
                         <Box className={classesReport.reviewReportTwoBlockSub}>
                             <Typography className={classesReport.reviewReportTitle}>{data?.type}</Typography>
-                            <Typography className={classesReport.reviewReportQue}>{`${data?.name}: ${data?.ans}`}</Typography>
+                            <Typography className={classesReport.reviewReportQue}>{`${data?.name}: ${ data?.type == 'Timer' ? `${data?.ans?.hour}:${data?.ans?.minute}` : data?.ans}`}</Typography>
                         </Box>
                     )
                 })}

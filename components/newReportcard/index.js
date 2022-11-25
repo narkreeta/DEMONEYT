@@ -40,6 +40,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
     const [reportName, setReportName] = useState('');
     const [stepOpen, setStepOpen] = useState(false);
     const [cardSaveDetailsOpen, setCardSaveDetailsOpen] = useState(false);
+    const [activeEditData, setActiveEditData] = useState('');
 
     const handleBack = () => {
         setEdit(false)
@@ -47,11 +48,27 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
     }
 
     const handleSave = () => {
-        setCardSaveDetailsOpen(true);
-        localStorage.setItem("ReportCard", JSON.stringify({name: reportName, step: state}));
+        if (edit){
+            setEdit(false);
+            let arr = [...state];
+            let arr2 = arr.filter((data) => data?.id == activeEditData?.id)?.[0];
+            arr2['name'] = activeEditData?.name;
+            arr2['type'] = activeEditData?.type;
+            setState(arr);
+        }
+        else {
+            setCardSaveDetailsOpen(true);
+            localStorage.setItem("ReportCard", JSON.stringify({name: reportName, step: state}));
+        }
     }
 
-    console.log(state, 'state indx')
+    const handleEdit = (data) => {
+        setActiveEditData(data);
+        setEdit(true);
+    }
+
+    console.log(state, 'state indx');
+    console.log(activeEditData, 'activeEditData');
 
     return (
         <>
@@ -90,7 +107,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                     </Box>
                     <CardContent className={classes.cardContent}>
                         {edit ?
-                            <Edit /> :
+                            <Edit activeEditData={activeEditData} setActiveEditData={setActiveEditData} /> :
                             <>
                                 <Input placeholder='Report card name' className={classes.inputBox} value={reportName} onChange={(e) => setReportName(e.target.value)} />
                                 {state?.map((data) => {
@@ -102,7 +119,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                                                 </Box>
                                                 <Typography style={{ fontWeight: 'bold' }}>{data?.name}: Tap to edit</Typography>
                                             </div>
-                                            <Typography className={classes.reportDataBtn} onClick={() => setEdit(true)}>Edit</Typography>
+                                            <Typography className={classes.reportDataBtn} onClick={() => handleEdit(data)}>Edit</Typography>
                                         </Box>
                                     )
                                 })}

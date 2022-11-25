@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'; 
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyleSteps = makeStyles({
     adultsChildren: {
@@ -6,7 +6,7 @@ export const useStyleSteps = makeStyles({
         minHeight: '120px',
         display: 'flex',
         alignItems: 'center',
-        ['@media (max-width:640px)']: { 
+        ['@media (max-width:640px)']: {
             flexDirection: 'column',
             marginBottom: '20px'
         },
@@ -14,14 +14,14 @@ export const useStyleSteps = makeStyles({
     adultsChildrenLeft: {
         fontWeight: 'bold !important',
         width: '40%',
-        ['@media (max-width:640px)']: { 
+        ['@media (max-width:640px)']: {
             width: '100%',
             fontSize: '20px'
         },
     },
     adultsChildrenRight: {
         width: '60%',
-        ['@media (max-width:640px)']: { 
+        ['@media (max-width:640px)']: {
             width: '100%',
             margin: '20px 0px'
         },
@@ -29,7 +29,7 @@ export const useStyleSteps = makeStyles({
     eventRateMain: {
         textAlign: 'center',
         marginBottom: '150px',
-        ['@media (max-width:640px)']: { 
+        ['@media (max-width:640px)']: {
             '& h5': {
                 fontSize: '20px'
             },
@@ -66,7 +66,7 @@ export const useStyleSteps = makeStyles({
         textAlign: 'center',
         fontWeight: 'bold !important',
         margin: '30px auto !important',
-        ['@media (max-width:640px)']: { 
+        ['@media (max-width:640px)']: {
             fontSize: '22px'
         },
     },
@@ -76,7 +76,7 @@ export const useStyleSteps = makeStyles({
     formQueTitle: {
         fontWeight: 'bold !important',
         marginBottom: '10px !important',
-        ['@media (max-width:640px)']: { 
+        ['@media (max-width:640px)']: {
             fontSize: '15px'
         },
     },
@@ -90,7 +90,7 @@ export const useStyleSteps = makeStyles({
         height: '50px',
         padding: '15px',
         color: '#000',
-        ['@media (max-width:640px)']: { 
+        ['@media (max-width:640px)']: {
             height: '45px',
             fontSize: '14px'
         },
@@ -109,7 +109,7 @@ export const useStyleSteps = makeStyles({
             width: '40px',
             cursor: 'pointer'
         },
-        ['@media (max-width:640px)']: { 
+        ['@media (max-width:640px)']: {
             //height: '60px',
             '& svg': {
                 height: '30px',
@@ -163,13 +163,13 @@ export const useStyleSteps = makeStyles({
         textAlign: 'center',
         margin: '0',
         padding: '0',
-       /* @keyframes example {
-            0%   {color:'red'; left:'0px'; top:'0px';}
-            25%  {color:'yellow'; left:'200px'; top:'0px';}
-            50%  {color:'blue'; left:'200px'; top:'200px';}
-            75%  {color:'green'; left:'0px'; top:'200px';}
-            100% {color:'red'; left:'0px'; top:'0px';}
-          } */
+        /* @keyframes example {
+             0%   {color:'red'; left:'0px'; top:'0px';}
+             25%  {color:'yellow'; left:'200px'; top:'0px';}
+             50%  {color:'blue'; left:'200px'; top:'200px';}
+             75%  {color:'green'; left:'0px'; top:'200px';}
+             100% {color:'red'; left:'0px'; top:'0px';}
+           } */
     },
     counterBottom: {
         margin: '0',
@@ -189,4 +189,53 @@ export const useStyleSteps = makeStyles({
         color: '#e6e6e6',
         fontWeight: 'bold'
     },
+    happySad: {
+        cursor: 'pointer'
+    },
+    happyActive: {
+        backgroundColor: '#00D084',
+        borderTopLeftRadius: '10px',
+        borderBottomLeftRadius: '10px'
+    },
+    sadActive: {
+        backgroundColor: '#00D084',
+        borderTopRightRadius: '10px',
+        borderBottomRightRadius: '10px'
+    },
+    datePicker: {
+        marginTop: '30px',
+        textAlign: 'center',
+        '& input': {
+            height: '45px',
+            borderRadius: '10px',
+            padding: '10px',
+            border: '1px solid #cdcdcd',
+            background: '#fff',
+            boxShadow: '0px 0px 10px #ddd',
+        },
+    },
+    timerTop: {
+        width: 'fit-content',
+        height: '45px',
+        borderRadius: '10px',
+        background: '#fff',
+        boxShadow: '0px 0px 10px #ddd',
+        margin: 'auto',
+        marginTop: '30px',
+        "& div:first-child": {
+            borderRight: '1px solid #cdcdcd',
+        },
+    },
+    timerInput: {
+        width: '80px',
+        height: '100%',
+        padding: '10px',
+        "&:before, &:after": {
+            content: 'none !important'
+        },
+        '& .MuiInputBase-input': {
+            color: "#000 !important",
+            "-webkit-text-fill-color": "#000 !important",
+        }
+    }
 })

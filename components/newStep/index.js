@@ -27,10 +27,15 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import Image from 'next/image'
 import { RiArrowUpDownFill } from 'react-icons/ri';
 import CardSaveDetails from '../cardSave/cardSaveDetails';
-
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+
+import TimerImg from '../../public/asset/images/Frame3.svg';
+import CounterImg from '../../public/asset/images/counter.svg';
+import HappySadImg from '../../public/asset/images/choice.svg';
+import DateImg from '../../public/asset/images/date.svg';
+import InputImg from '../../public/asset/images/empty.svg';
 
 const style = {
     position: 'absolute',
@@ -102,7 +107,7 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
     }
 
     const handleSave = () => {
-        value !== '' && setState([...state, {name: stepName,  type: value}]);
+        value !== '' && setState([...state, {id: Math.random().toString(16).slice(2),  name: stepName,  type: value}]);
         setStepName('');
         setValue('');
         handleClose();
@@ -204,60 +209,65 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                                                             {ele?.name}
                                                         </Typography>
                                                         {ele?.name == 'Timer' &&
-                                                            <Box className={classes.summaryRight}>
-                                                                <Input className={classes.summaryRightInput} disabled />
-                                                                <Input className={classes.summaryRightInput} disabled />
-                                                            </Box>
+                                                            // <Box className={classes.summaryRight}>
+                                                            //     <Input className={classes.summaryRightInput} disabled />
+                                                            //     <Input className={classes.summaryRightInput} disabled />
+                                                            // </Box>
+                                                            <Image src={TimerImg} />
                                                         }
                                                         {ele?.name == 'Date' &&
-                                                            <Box className={classes.summaryRight}>
-                                                                <Input className={classes.summaryRightInput} disabled />
-                                                                <Input className={classes.summaryRightInput} disabled />
-                                                                <Input className={classes.summaryRightInput} disabled />
-                                                            </Box>
+                                                            // <Box className={classes.summaryRight}>
+                                                            //     <Input className={classes.summaryRightInput} disabled />
+                                                            //     <Input className={classes.summaryRightInput} disabled />
+                                                            //     <Input className={classes.summaryRightInput} disabled />
+                                                            // </Box>
+                                                            <Image src={DateImg} />
                                                         }
                                                         {ele?.name == 'Counter' &&
-                                                            <Box className={classes.summaryRight}>
-                                                                <div className={`${classesSteps.countPlusMinus} ${classes.counterSection}`}>
-                                                                    <div className={classesSteps.countPlusMinusSub}>
-                                                                        <RemoveCircleOutlineIcon style={{ cursor: 'default' }} />
-                                                                    </div>
+                                                            // <Box className={classes.summaryRight}>
+                                                            //     <div className={`${classesSteps.countPlusMinus} ${classes.counterSection}`}>
+                                                            //         <div className={classesSteps.countPlusMinusSub}>
+                                                            //             <RemoveCircleOutlineIcon style={{ cursor: 'default' }} />
+                                                            //         </div>
 
-                                                                    <div className={classesSteps.countPlusMinusSub} style={{ borderLeft: '1px solid #bfbfbf', borderRight: '1px solid #bfbfbf' }}>
-                                                                        <Box className={`${classesSteps.counterSection}`}>
-                                                                            <Box className={`${classesSteps.counterTop} ${classesSteps.counterTopAbove} ${classes.counterTopAbove}`}>
-                                                                                {count !== lowerLimit ? count - 1 : ''}
-                                                                            </Box>
-                                                                            <Box className={`${classesSteps.counterTop} ${classes.counterTop}`}>
-                                                                                {count !== lowerLimit ? count - 1 : ''}
-                                                                            </Box>
-                                                                            <Box className={`${classesSteps.counterMiddle} ${classes.counterMiddle}`}>
-                                                                                {count}
-                                                                            </Box>
-                                                                            <Box className={`${classesSteps.counterBottom} ${classes.counterBottom}`}>
-                                                                                {count !== upperLimit ? count + 1 : ''}
-                                                                            </Box>
-                                                                            <Box className={`${classesSteps.counterBottom} ${classesSteps.counterBottomBelow} ${classes.counterBottomBelow}`}>
-                                                                                {count !== upperLimit ? count + 1 : ''}
-                                                                            </Box>
-                                                                        </Box>
-                                                                    </div>
-                                                                    <div className={classesSteps.countPlusMinusSub}>
-                                                                        <ControlPointIcon style={{ cursor: 'default' }} />
-                                                                    </div>
-                                                                </div>
-                                                            </Box>
+                                                            //         <div className={classesSteps.countPlusMinusSub} style={{ borderLeft: '1px solid #bfbfbf', borderRight: '1px solid #bfbfbf' }}>
+                                                            //             <Box className={`${classesSteps.counterSection}`}>
+                                                            //                 <Box className={`${classesSteps.counterTop} ${classesSteps.counterTopAbove} ${classes.counterTopAbove}`}>
+                                                            //                     {count !== lowerLimit ? count - 1 : ''}
+                                                            //                 </Box>
+                                                            //                 <Box className={`${classesSteps.counterTop} ${classes.counterTop}`}>
+                                                            //                     {count !== lowerLimit ? count - 1 : ''}
+                                                            //                 </Box>
+                                                            //                 <Box className={`${classesSteps.counterMiddle} ${classes.counterMiddle}`}>
+                                                            //                     {count}
+                                                            //                 </Box>
+                                                            //                 <Box className={`${classesSteps.counterBottom} ${classes.counterBottom}`}>
+                                                            //                     {count !== upperLimit ? count + 1 : ''}
+                                                            //                 </Box>
+                                                            //                 <Box className={`${classesSteps.counterBottom} ${classesSteps.counterBottomBelow} ${classes.counterBottomBelow}`}>
+                                                            //                     {count !== upperLimit ? count + 1 : ''}
+                                                            //                 </Box>
+                                                            //             </Box>
+                                                            //         </div>
+                                                            //         <div className={classesSteps.countPlusMinusSub}>
+                                                            //             <ControlPointIcon style={{ cursor: 'default' }} />
+                                                            //         </div>
+                                                            //     </div>
+                                                            // </Box>
+                                                            <Image src={CounterImg} />
                                                         }
                                                         {ele?.name == 'A / B Choice' &&
-                                                            <Box className={classes.summaryRight}>
-                                                                <div className={classes.happySad} style={{ borderRight: '1px solid rgb(191, 191, 191)' }} ><Image src={Happy} /></div>
-                                                                <div className={classes.happySad}><Image src={Sad} /></div>
-                                                            </Box>
+                                                            // <Box className={classes.summaryRight}>
+                                                            //     <div className={classes.happySad} style={{ borderRight: '1px solid rgb(191, 191, 191)' }} ><Image src={Happy} /></div>
+                                                            //     <div className={classes.happySad}><Image src={Sad} /></div>
+                                                            // </Box>
+                                                            <Image src={HappySadImg} />
                                                         }
                                                         {ele?.name == 'Text field' &&
-                                                            <Box className={classes.summaryRight}>
-                                                                <Input className={classes.summaryRightInput} />
-                                                            </Box>
+                                                            // <Box className={classes.summaryRight}>
+                                                            //     <Input className={classes.summaryRightInput} />
+                                                            // </Box>
+                                                            <Image src={InputImg} />
                                                         }
                                                     </div>
                                                 </div>
