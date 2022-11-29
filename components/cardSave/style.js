@@ -38,10 +38,10 @@ export const useStylesCardSave = makeStyles({
         }
     },
     cardSaveDetailsDate: {
-        boxShadow: '0px 0px 10px inset',
+        boxShadow: '0px 0px 10px #bfbfbf inset',
         fontWeight: 'bold !important',
         borderRadius: '15px',
-        opacity: '25%',
+        //opacity: '25%',
         border: '0',
         //height: '50px',
         color: '#000',
@@ -55,10 +55,10 @@ export const useStylesCardSave = makeStyles({
         }
     },
     cardSaveDetailsTime: {
-        boxShadow: '0px 0px 10px inset',
+        boxShadow: '0px 0px 10px #bfbfbf inset',
         fontWeight: 'bold !important',
         borderRadius: '15px',
-        opacity: '25%',
+        //opacity: '25%',
         border: '0',
         //height: '50px',
         color: '#000',
@@ -90,10 +90,10 @@ export const useStylesCardSave = makeStyles({
         width: '100%',
     },
     cardSaveDetailsDateTimeInputBoxInput: {
-        boxShadow: '0px 0px 10px inset',
+        boxShadow: '0px 0px 10px #bfbfbf inset',
         fontWeight: 'bold !important',
         borderRadius: '15px',
-        opacity: '25%',
+        //opacity: '25%',
         border: '0',
         height: '50px',
         padding: '15px',

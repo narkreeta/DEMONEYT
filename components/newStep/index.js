@@ -46,7 +46,8 @@ const style = {
     maxWidth: '90%',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    height: '90%',
+    height: 'auto',
+    maxHeight: '90%',
     overflowY: 'scroll',
     paddingBottom: '30px',
     borderBottom: '5px solid #00D084'
@@ -149,11 +150,11 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
     }
 
     const handleInput = (e) => {
-        setStepName(e); 
-        if(e !== '') { 
-            setStepNameError(''); 
+        setStepName(e);
+        if (e !== '') {
+            setStepNameError('');
         }
-        else { 
+        else {
             setStepNameError('* You must enter a name for this step');
         }
     }
@@ -189,12 +190,12 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                             >
                                 New report card
                             </Typography>
-                            <Button className={newReportClasses.bannerContentBtn} onClick={() => handleClose()}>
+                            <Button tabindex="-1" className={newReportClasses.bannerContentBtn} onClick={() => handleClose()}>
                                 <HighlightOffIcon style={{ fontSize: '30px' }} />
                             </Button>
                         </Box>
                         <CardContent className={`${newReportClasses.cardContent} ${classes.cardContent}`}>
-                            <Input value={stepName} onChange={(e) => handleInput(e.target.value)} placeholder='Step Name' className={newReportClasses.inputBox} />
+                            <Input inputProps={{ tabIndex: "-1" }} value={stepName} onChange={(e) => handleInput(e.target.value)} placeholder='Step Name' className={newReportClasses.inputBox} />
                             <Typography className={classes.errorMsg}>{stepNameError}</Typography>
                             <Typography variant='h5' className={editReportClasses.categoryTitle}>Select your Category & Data Point</Typography>
                             <RadioGroup
@@ -219,7 +220,7 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                                             >
 
                                             </AccordionSummary> */}
-                                                <FormControlLabel value={ele?.name} control={<Radio />} />
+                                                <FormControlLabel value={ele?.name} control={<Radio inputProps={{ tabIndex: "-1" }} />} />
                                                 <div className={classes.accordionSummaryRight}>
                                                     <div className={classes.accordionSummaryData}>
                                                         <Typography className={`${welcomeClasses.accordionHeadContent} ${classes.accordionHeadContent}`}>
@@ -323,10 +324,10 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                                     )
                                 })}
                             </RadioGroup>
-                            <Typography style={{top: '20px'}} className={classes.errorMsg}>{valueError}</Typography>
+                            <Typography style={{ top: '20px' }} className={classes.errorMsg}>{valueError}</Typography>
                             <Box className={newReportClasses.btnPart}>
-                                <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`} onClick={() => handleBack()}>Back</Button>
-                                <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`} onClick={() => handleSave()}>Save</Button>
+                                <Button tabindex="-1" className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`} onClick={() => handleBack()}>Back</Button>
+                                <Button tabindex="-1" className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`} onClick={() => handleSave()}>Save</Button>
                             </Box>
                         </CardContent>
                     </Box>

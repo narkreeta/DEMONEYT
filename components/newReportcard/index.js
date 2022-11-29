@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -26,7 +26,8 @@ const style = {
     maxWidth: '90%',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    height: '90%',
+    height: 'auto',
+    maxHeight: '90%',
     overflowY: 'scroll',
     paddingBottom: '30px',
     borderBottom: '5px solid #00D084'
@@ -36,8 +37,10 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
     const classes = useStylesNewreport();
     const handleClose = () => setOpen(false);
     const [state, setState] = useState([]);
+    const [reportList, setReportList] = useState([]);
     const [edit, setEdit] = useState(false);
     const [reportName, setReportName] = useState('');
+    const [reportNameError, setReportNameError] = useState('');
     const [stepOpen, setStepOpen] = useState(false);
     const [cardSaveDetailsOpen, setCardSaveDetailsOpen] = useState(false);
     const [activeEditData, setActiveEditData] = useState('');
@@ -46,6 +49,13 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
         setEdit(false)
         setOpen(false)
     }
+
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
 
     const handleSave = () => {
         if (edit) {
@@ -62,14 +72,36 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
             }
         }
         else {
-            setCardSaveDetailsOpen(true);
-            localStorage.setItem("ReportCard", JSON.stringify({ name: reportName, step: state }));
+            if (reportName !== '') {
+                setCardSaveDetailsOpen(true);
+                localStorage.setItem("ReportCard", JSON.stringify({ name: reportName, step: state }));
+                setReportList([...reportList, { name: reportName, date: today }]);
+                localStorage.setItem("ReportList", JSON.stringify([...reportList, { name: reportName, date: today }]));
+            }
+            else {
+                setReportNameError('* You must enter a name for this report')
+            }
         }
     }
 
     const handleEdit = (data) => {
         setActiveEditData(data);
         setEdit(true);
+    }
+
+    console.log(reportList, 'reportList')
+
+    useEffect(() => {
+        setReportList(JSON.parse(localStorage.getItem("ReportList")));
+    }, []);
+
+    // useEffect(() => {
+    //     localStorage.setItem("ReportList", JSON.stringify(reportList));
+    // }, [reportList]);
+
+    const handleReportName = (val) => {
+        setReportName(val);
+        val == '' ? setReportNameError('* You must enter a name for this report') : setReportNameError('');
     }
 
     return (
@@ -103,7 +135,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                             >
                                 Creating new report card
                             </Typography>
-                            <Button className={classes.bannerContentBtn} onClick={() => handleClose()}>
+                            <Button tabindex="-1" className={classes.bannerContentBtn} onClick={() => handleClose()}>
                                 <HighlightOffIcon style={{ fontSize: '30px' }} />
                             </Button>
                         </Box>
@@ -111,7 +143,8 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                             {edit ?
                                 <Edit activeEditData={activeEditData} setActiveEditData={setActiveEditData} /> :
                                 <>
-                                    <Input placeholder='Report card name' className={classes.inputBox} value={reportName} onChange={(e) => setReportName(e.target.value)} />
+                                    <Input inputProps={{ tabIndex: "-1" }} placeholder='Report card name' className={classes.inputBox} value={reportName} onChange={(e) => handleReportName(e.target.value)} />
+                                    <Typography className={classes.errorMsg} style={{ marginBottom: '10px' }}>{reportNameError}</Typography>
                                     {state?.map((data) => {
                                         return (
                                             <Box className={classes.reportData}>
@@ -119,7 +152,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                                                     <Box className={classes.reportDataIcon}>
                                                         <RiArrowUpDownFill color='#00D084' />
                                                     </Box>
-                                                    <Typography style={{ fontWeight: 'bold' }}>{data?.name}: Tap to edit</Typography>
+                                                    <Typography style={{ fontWeight: 'bold', color: '#000' }}>{data?.name}</Typography>
                                                 </div>
                                                 <Typography className={classes.reportDataBtn} onClick={() => handleEdit(data)}>Edit</Typography>
                                             </Box>
@@ -134,8 +167,8 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                                 </>
                             }
                             <Box className={classes.btnPart}>
-                                <Button className={`${classes.btnPartBtn} ${classes.backBtn}`} onClick={() => handleBack()}>Back</Button>
-                                <Button className={`${classes.btnPartBtn} ${classes.saveBtn}`} onClick={() => handleSave()}>Save</Button>
+                                <Button tabindex="-1" className={`${classes.btnPartBtn} ${classes.backBtn}`} onClick={() => handleBack()}>Back</Button>
+                                <Button tabindex="-1" className={`${classes.btnPartBtn} ${classes.saveBtn}`} onClick={() => handleSave()}>Save</Button>
                             </Box>
                         </CardContent>
                     </Box>

@@ -17,6 +17,7 @@ import { useStylesWelcome } from "./style";
 import NewReportIndex from '../newReportcard';
 import ReportIndex from '../report';
 import UpcommingCurrentIndex from '../upcomingCurrentReports';
+import PastReportIndex from '../pastReport';
 
 const WelcomeIndex = () => {
     //const userName = localStorage != undefined ? localStorage.getItem("userName") : '';
@@ -32,6 +33,7 @@ const WelcomeIndex = () => {
     ]);
     const [stepsData, setStepsData] = useState([]);
     const [upcommingCurrentReport, setUpcommingCurrentReport] = useState(false);
+    const [pastReportOpen, setPastReportOpen] = useState(false);
     const classes = useStylesWelcome();
 
     const handleChange =
@@ -51,11 +53,13 @@ const WelcomeIndex = () => {
     const handleTitle = (data) => {
         console.log(data, 'data frm handleTitle');
         data == 'Upcoming & current reports' && setUpcommingCurrentReport(true);
+        data == 'Past reports' && setPastReportOpen(true);
     }
 
     const handleIcon = (data) => {
         console.log(data, 'data frm handleicon');
         data == 'Upcoming & current reports' && setUpcommingCurrentReport(true);
+        data == 'Past reports' && setPastReportOpen(true);
     }
 
     return (
@@ -129,6 +133,10 @@ const WelcomeIndex = () => {
                 upcommingCurrentReport={upcommingCurrentReport}
                 setUpcommingCurrentReport={setUpcommingCurrentReport}
                 userName={userName}
+            />
+            <PastReportIndex 
+                pastReportOpen={pastReportOpen}
+                setPastReportOpen={setPastReportOpen}
             />
             {/* <ReportIndex reportOpen={reportOpen} setReportOpen={setReportOpen} /> */}
         </div>

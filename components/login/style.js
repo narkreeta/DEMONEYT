@@ -25,10 +25,9 @@ export const useStyles = makeStyles(theme => ({
         }
     },
     inputBox: {
-        boxShadow: '0px 0px 10px inset',
+        boxShadow: '0px 0px 10px #bfbfbf inset',
         fontWeight: 'bold !important',
         borderRadius: '15px',
-        opacity: '25%',
         border: '0',
         height: '50px',
         padding: '15px',
@@ -39,7 +38,16 @@ export const useStyles = makeStyles(theme => ({
         '& .MuiInputBase-input': {
             color: "#000 !important",
             "-webkit-text-fill-color": "#000 !important",
-        }
+        },
+        '& .MuiInputBase-input::-webkit-input-placeholder': {
+            color: "#000 !important",
+        },
+        '& .MuiInputBase-input:-ms-input-placeholder': {
+            color: "#000 !important",
+        },
+        '& .MuiInputBase-input::placeholder': {
+            color: "#000 !important",
+        },
     },
     buttonHead: {
         display: 'flex',

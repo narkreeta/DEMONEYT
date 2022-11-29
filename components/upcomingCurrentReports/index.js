@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -23,7 +23,8 @@ const style = {
     maxWidth: '90%',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    height: '90%',
+    height: 'auto',
+    maxHeight: '90%',
     overflowY: 'scroll',
     paddingBottom: '30px',
     borderBottom: '5px solid #00D084'
@@ -35,7 +36,13 @@ const UpcommingCurrentIndex = ({ upcommingCurrentReport, setUpcommingCurrentRepo
     const classes = useStylesUpcomingCurrent();
     const newReportClasses = useStylesNewreport();
 
-    const [reportList, setReportList] = useState(['Report1', 'Report2']);
+    const [reportList, setReportList] = useState([]);
+    console.log(reportList, 'reportList upcoming')
+
+    useEffect(() => {
+        localStorage != undefined && setReportList(JSON.parse(localStorage.getItem("ReportList")));
+    }, []);
+
     return (
         <div>
             <Modal
@@ -50,7 +57,7 @@ const UpcommingCurrentIndex = ({ upcommingCurrentReport, setUpcommingCurrentRepo
                 }}
             >
                 <Fade in={upcommingCurrentReport}>
-                    <Box sx={style}>
+                    <Box sx={style} className={newReportClasses.boxStyle}>
                         <CardMedia
                             component="img"
                             height="150"
@@ -84,7 +91,9 @@ const UpcommingCurrentIndex = ({ upcommingCurrentReport, setUpcommingCurrentRepo
                                                 <Box className={classesWelcome.accordionDetailsBox}>
                                                     <Button className={classesWelcome.accordionDetailsBoxBtn}>
                                                         <BiChevronRightCircle className={classesWelcome.accordionDetailsBoxIcon} />
-                                                        <Typography className={classesWelcome.accordionDetailsBoxContent}>{data}</Typography>
+                                                        <Typography className={classesWelcome.accordionDetailsBoxContent}>
+                                                            {`${data?.date} | ${data?.name}`}
+                                                        </Typography>
                                                     </Button>
                                                 </Box>
                                             )

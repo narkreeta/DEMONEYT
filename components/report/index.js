@@ -33,7 +33,8 @@ const style = {
   maxWidth: '90%',
   bgcolor: 'background.paper',
   boxShadow: 24,
-  height: '90%',
+  height: 'auto',
+  maxHeight: '90%',
   overflowY: 'scroll',
   paddingBottom: '30px',
   borderBottom: '5px solid #00D084'
@@ -52,7 +53,7 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
   const [stepQueAns, setStepQueAns] = useState([]);
   const steps = stepData;
   const handleClose = () => setReportOpen(false);
-
+  
   const isStepOptional = (step) => {
     //return step === 1;
     return;
@@ -71,6 +72,10 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
+    if (activeStep === steps?.length - 1){
+      localStorage.setItem("LastReviewReport", JSON.stringify(stepQueAns));
+      localStorage.setItem("LastReviewReportName", reportName);
+    }
   };
 
   const handleBack = () => {
@@ -147,7 +152,7 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
                 )
                 }
               </Typography>
-              <Button className={classesNewreport.bannerContentBtn} onClick={() => handleClose()}>
+              <Button tabIndex="-1" className={classesNewreport.bannerContentBtn} onClick={() => handleClose()}>
                 <HighlightOffIcon style={{ fontSize: '30px' }} />
               </Button>
             </Box>
@@ -251,6 +256,7 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
                         disabled={activeStep === 0}
                         onClick={handleBack}
                         className={`${classesNewreport.btnPartBtn} ${classesNewreport.backBtn}`}
+                        tabIndex="-1"
                       >
                         Back
                       </Button>
@@ -260,7 +266,7 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
                           Skip
                         </Button>
                       )}
-                      <Button className={`${classesNewreport.btnPartBtn} ${classesNewreport.saveBtn}`} onClick={handleNext}>
+                      <Button tabIndex="-1" className={`${classesNewreport.btnPartBtn} ${classesNewreport.saveBtn}`} onClick={() => handleNext()}>
                         {activeStep === steps?.length - 1 ? 'Finish' : 'Next'}
                       </Button>
                     </Box>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useStylesReport } from './style';
@@ -6,9 +6,17 @@ import HappyGreen from '../../public/asset/images/HappyGreen.png';
 import SadGreen from '../../public/asset/images/SadGreen.png';
 import Image from 'next/image'
 
-const ReviewReport = ({ stepQueAns }) => {
-    console.log(stepQueAns, 'stepQueAns inside')
+const ReviewReport = () => {
+    const [Data, setData] = useState([]);
     const classesReport = useStylesReport();
+
+    useEffect(() => {
+        if (localStorage != undefined) {
+            let data = localStorage != undefined ? JSON.parse(localStorage.getItem("LastReviewReport")) : '';
+            setData(data);
+        }
+    }, []);
+
     return (
         <Box>
             {/* <Typography className={classesReport.reviewReportTitle}>Adults & Children</Typography>
@@ -44,11 +52,11 @@ const ReviewReport = ({ stepQueAns }) => {
                 </Box>
             </Box> */}
             <Box className={classesReport.reviewReportTwoBlock}>
-                {stepQueAns?.map((data) => {
+                {Data?.map((data) => {
                     return (
                         <Box className={classesReport.reviewReportTwoBlockSub}>
                             <Typography className={classesReport.reviewReportTitle}>{data?.type}</Typography>
-                            <Typography className={classesReport.reviewReportQue}>{`${data?.name}: ${ data?.type == 'Timer' ? `${data?.ans?.hour}:${data?.ans?.minute}` : data?.ans}`}</Typography>
+                            <Typography className={classesReport.reviewReportQue}>{`${data?.name}: ${data?.type == 'Timer' ? `${data?.ans?.hour}:${data?.ans?.minute}` : data?.ans}`}</Typography>
                         </Box>
                     )
                 })}

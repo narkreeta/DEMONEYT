@@ -43,9 +43,9 @@ export const useStylesNewreport = makeStyles({
         },
     },
     inputBox: {
-        boxShadow: '0px 0px 10px inset',
+        boxShadow: '0px 0px 10px #bfbfbf inset',
         borderRadius: '15px',
-        opacity: '25%',
+        //opacity: '25%',
         border: '0',
         height: '50px',
         padding: '15px',
@@ -160,4 +160,11 @@ export const useStylesNewreport = makeStyles({
             backgroundColor: '#00D084 !important',
         },
     },
+    errorMsg: {
+        color: 'red',
+        fontSize: '13px !important',
+        fontWeight: 'bold !important',
+        position: 'relative',
+        top: '-10px'
+    }
 });
