@@ -172,8 +172,8 @@ export const useStylesNewstep = makeStyles({
     },
     errorMsg: {
         color: 'red',
-        fontSize: '13px',
-        fontWeight: 'bold',
+        fontSize: '13px !important',
+        fontWeight: 'bold !important',
         position: 'relative',
         top: '-10px'
     }
