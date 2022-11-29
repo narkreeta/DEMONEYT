@@ -95,7 +95,7 @@ const CardSaveDetails = ({cardSaveDetailsOpen, setCardSaveDetailsOpen}) => {
                                         />
                                     </Box>
                                 </Box>
-                                <Box>
+                                <Box style={{ marginTop: '30px' }}>
                                     <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>End time and date</Typography>
                                     <Box className={classes.timeDateTop}>
                                         <TextField

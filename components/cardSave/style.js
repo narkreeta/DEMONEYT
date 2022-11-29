@@ -9,14 +9,17 @@ export const useStylesCardSave = makeStyles({
     },
     cardSaveDetailsDateTime: {
         display: 'flex',
-        gap: '15px',
+        flexDirection: 'column',
         ['@media (max-width:767px)']: {
             flexDirection: 'column'
         }
     },
     timeDateTop: {
         display: 'flex',
-        gap: '10px'
+        gap: '10px',
+        ['@media (max-width:500px)']: {
+            flexDirection: 'column'
+        }
     },
     cardSaveDetailsDateTimeFieldTitle: {
         marginBottom: '10px !important',
@@ -42,9 +45,13 @@ export const useStylesCardSave = makeStyles({
         border: '0',
         //height: '50px',
         color: '#000',
-        width: '150px',
+        width: '50%',
         '& fieldset': {
             border: '0'
+        },
+        ['@media (max-width:500px)']: {
+            height: '50px',
+            width: '100%'
         }
     },
     cardSaveDetailsTime: {
@@ -55,9 +62,8 @@ export const useStylesCardSave = makeStyles({
         border: '0',
         //height: '50px',
         color: '#000',
-        width: '100px',
+        width: '50%',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
         "&:before, &:after": {
             content: 'none !important'
@@ -73,6 +79,10 @@ export const useStylesCardSave = makeStyles({
         },
         '& fieldset': {
             border: '0'
+        },
+        ['@media (max-width:500px)']: {
+            height: '50px',
+            width: '100%'
         }
     },
     cardSaveDetailsDateTimeInputBox: {

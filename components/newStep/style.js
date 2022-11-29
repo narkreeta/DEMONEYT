@@ -3,9 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStylesNewstep = makeStyles({
     accordion: {
         marginBottom: '0 !important',
+        paddingLeft: '15px',
         '& div.MuiAccordionDetails-root': {
             paddingBottom: '0',
             paddingRight: '25px'
+        },
+        '&.active': {
+            backgroundColor: '#e6faf3'
         }
     },
     accordionSummaryTop: {
@@ -165,5 +169,12 @@ export const useStylesNewstep = makeStyles({
         "& .Mui-checked": {
             color: '#00D084 !important'
         }
+    },
+    errorMsg: {
+        color: 'red',
+        fontSize: '13px',
+        fontWeight: 'bold',
+        position: 'relative',
+        top: '-10px'
     }
 });

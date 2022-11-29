@@ -32,7 +32,6 @@ import InputImg from '../../public/asset/images/empty.svg';
 
 
 const Edit = ({activeEditData, setActiveEditData}) => {
-    console.log(activeEditData, 'activeEditData frm edit')
     const classes = useStylesNewreport();
     const welcomeClasses = useStylesWelcome();
     const editClasses = useStylesEdit();
@@ -61,11 +60,9 @@ const Edit = ({activeEditData, setActiveEditData}) => {
     const lowerLimit = 0;
     const [count, setCount] = useState(lowerLimit);
     const [value, setValue] = useState('');
-
-    console.log(value, 'value')
+    const [stepNameError, setStepNameError] = useState('');
 
     const handleRadio = (event) => {
-        console.log(event.target.value, 'etv')
         setValue(event.target.value);
         setActiveEditData({id: activeEditData?.id, name: activeEditData?.name, type: event.target.value })
     };
@@ -84,13 +81,19 @@ const Edit = ({activeEditData, setActiveEditData}) => {
         }
     }
 
+    const handleInput = (e) => {
+        e.target.value == '' ? setStepNameError('* You must enter a name for this step') : setStepNameError('')
+        setActiveEditData({id: activeEditData?.id, name: e.target.value, type: activeEditData?.type })
+    }
+
     return (
         <div>
             <Input
                 className={classes.inputBox} 
                 value={activeEditData?.name} 
-                onChange={(e) => setActiveEditData({id: activeEditData?.id, name: e.target.value, type: activeEditData?.type })}
+                onChange={(e) => handleInput(e)}
             />
+            <Typography className={newStepClasses.errorMsg}>{stepNameError}</Typography>
             <Typography variant='h5' className={editClasses.categoryTitle}>Select your Category & Data Point</Typography>
             <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
@@ -100,7 +103,7 @@ const Edit = ({activeEditData, setActiveEditData}) => {
             >
             {editData?.map((ele, index) => {
                 return (
-                    <Accordion key={ele?.name} className={`${welcomeClasses.accordion} ${ele?.data?.length > 0 ? '' : welcomeClasses.zeroMargin}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
+                    <Accordion key={ele?.name} className={`${welcomeClasses.accordion} ${newStepClasses.accordion} ${ele?.data?.length > 0 ? '' : welcomeClasses.zeroMargin} ${ele?.name == activeEditData?.type ? 'active' : ''}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
 
                     <div className={`${newStepClasses.accordionSummaryTop} ${newStepClasses.cardContent}`} style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}>
                         

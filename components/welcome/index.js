@@ -16,6 +16,7 @@ import { AiFillUpCircle } from 'react-icons/ai';
 import { useStylesWelcome } from "./style"; 
 import NewReportIndex from '../newReportcard';
 import ReportIndex from '../report';
+import UpcommingCurrentIndex from '../upcomingCurrentReports';
 
 const WelcomeIndex = () => {
     //const userName = localStorage != undefined ? localStorage.getItem("userName") : '';
@@ -27,9 +28,10 @@ const WelcomeIndex = () => {
         {name: 'Upcoming & current reports', data: []},
         {name: 'Add / edit report cards', data: ['New report card', 'Continue last report card', 'Edit existing report card']},
         {name: 'Past reports', data: []},
-        {name: 'Account setting', data: []},
+        {name: 'Account setting', data: ['Reset Password', 'Logout']},
     ]);
     const [stepsData, setStepsData] = useState([]);
+    const [upcommingCurrentReport, setUpcommingCurrentReport] = useState(false);
     const classes = useStylesWelcome();
 
     const handleChange =
@@ -44,6 +46,16 @@ const WelcomeIndex = () => {
     const handleSubcontent = (data) => {
         data == 'New report card' && setOpen(true);
         //data == 'Continue last report card' && setReportOpen(true);
+    }
+
+    const handleTitle = (data) => {
+        console.log(data, 'data frm handleTitle');
+        data == 'Upcoming & current reports' && setUpcommingCurrentReport(true);
+    }
+
+    const handleIcon = (data) => {
+        console.log(data, 'data frm handleicon');
+        data == 'Upcoming & current reports' && setUpcommingCurrentReport(true);
     }
 
     return (
@@ -74,15 +86,15 @@ const WelcomeIndex = () => {
                                 <Accordion key={data?.name} className={`${classes.accordion} ${data?.data?.length > 0 ? '' : classes.zeroMargin}`} expanded={expanded === `panel${index+1}`} onChange={handleChange(`panel${index+1}`)}>
                                     <AccordionSummary
                                         expandIcon={ expanded === `panel${index+1}` ?
-                                            <AiFillUpCircle className={classes.accordionIcon} /> :
-                                            <AddCircleOutlineIcon className={classes.accordionIcon} />
+                                            <AiFillUpCircle className={classes.accordionIcon} onClick={() => handleIcon(data?.name)} /> :
+                                            <AddCircleOutlineIcon className={classes.accordionIcon} onClick={() => handleIcon(data?.name)} />
                                         }
                                         aria-controls={`panel${index+1}bh-content`}
                                         id={`panel${index+1}bh-header`}
                                         className={classes.accordionSummary}
                                         style={{backgroundColor: expanded === `panel${index+1}` && '#E9FAF4'}}
                                     >
-                                        <Typography className={classes.accordionHeadContent}> 
+                                        <Typography className={classes.accordionHeadContent} onClick={() => handleTitle(data?.name)}> 
                                             {data?.name}
                                         </Typography>
                                     </AccordionSummary>
@@ -112,6 +124,11 @@ const WelcomeIndex = () => {
                 setOpen={setOpen} 
                 stepsData={stepsData}
                 setStepsData={setStepsData}
+            />
+            <UpcommingCurrentIndex
+                upcommingCurrentReport={upcommingCurrentReport}
+                setUpcommingCurrentReport={setUpcommingCurrentReport}
+                userName={userName}
             />
             {/* <ReportIndex reportOpen={reportOpen} setReportOpen={setReportOpen} /> */}
         </div>

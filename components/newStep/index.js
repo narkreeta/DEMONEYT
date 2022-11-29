@@ -76,10 +76,13 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
     const lowerLimit = 0;
     const [count, setCount] = useState(lowerLimit);
     const [value, setValue] = useState('');
+    const [valueError, setValueError] = useState('');
     const [stepName, setStepName] = useState('');
+    const [stepNameError, setStepNameError] = useState('');
 
     const handleRadio = (event) => {
         setValue(event.target.value);
+        setValueError('');
     };
 
     const increment = () => {
@@ -107,11 +110,15 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
     }
 
     const handleSave = () => {
-        value !== '' && setState([...state, {id: Math.random().toString(16).slice(2),  name: stepName,  type: value}]);
-        setStepName('');
-        setValue('');
-        handleClose();
-        //setCardSaveDetailsOpen(true);
+        stepName === '' && setStepNameError('* You must enter a name for this step');
+        value === '' && setValueError('* You must select an option');
+        if (stepName !== '' && value !== '') {
+            value !== '' && setState([...state, { id: Math.random().toString(16).slice(2), name: stepName, type: value }]);
+            setStepName('');
+            setValue('');
+            handleClose();
+            //setCardSaveDetailsOpen(true);
+        }
     }
 
     const addCounter = () => {
@@ -139,6 +146,16 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
 
     const handleBack = () => {
         setStepOpen(false)
+    }
+
+    const handleInput = (e) => {
+        setStepName(e); 
+        if(e !== '') { 
+            setStepNameError(''); 
+        }
+        else { 
+            setStepNameError('* You must enter a name for this step');
+        }
     }
 
     return (
@@ -177,8 +194,8 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                             </Button>
                         </Box>
                         <CardContent className={`${newReportClasses.cardContent} ${classes.cardContent}`}>
-                            <Input value={stepName} onChange={(e) => setStepName(e.target.value)} placeholder='Step Name' className={newReportClasses.inputBox} />
-
+                            <Input value={stepName} onChange={(e) => handleInput(e.target.value)} placeholder='Step Name' className={newReportClasses.inputBox} />
+                            <Typography className={classes.errorMsg}>{stepNameError}</Typography>
                             <Typography variant='h5' className={editReportClasses.categoryTitle}>Select your Category & Data Point</Typography>
                             <RadioGroup
                                 aria-labelledby="demo-controlled-radio-buttons-group"
@@ -188,7 +205,7 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                             >
                                 {addData?.map((ele, index) => {
                                     return (
-                                        <Accordion key={ele?.name} className={`${welcomeClasses.accordion} ${classes.accordion} ${ele?.data?.length > 0 ? '' : welcomeClasses.zeroMargin}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
+                                        <Accordion key={ele?.name} className={`${welcomeClasses.accordion} ${classes.accordion} ${ele?.data?.length > 0 ? '' : welcomeClasses.zeroMargin} ${ele?.name == value ? 'active' : ''}`} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
                                             <div className={classes.accordionSummaryTop} style={{ backgroundColor: expanded === `panel${index + 1}` && '#E9FAF4' }}>
                                                 {/* <AccordionSummary
                                                 expandIcon={expanded === `panel${index + 1}` ?
@@ -202,7 +219,7 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                                             >
 
                                             </AccordionSummary> */}
-                                            <FormControlLabel value={ele?.name} control={<Radio />} /> 
+                                                <FormControlLabel value={ele?.name} control={<Radio />} />
                                                 <div className={classes.accordionSummaryRight}>
                                                     <div className={classes.accordionSummaryData}>
                                                         <Typography className={`${welcomeClasses.accordionHeadContent} ${classes.accordionHeadContent}`}>
@@ -306,6 +323,7 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                                     )
                                 })}
                             </RadioGroup>
+                            <Typography style={{top: '20px'}} className={classes.errorMsg}>{valueError}</Typography>
                             <Box className={newReportClasses.btnPart}>
                                 <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`} onClick={() => handleBack()}>Back</Button>
                                 <Button className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`} onClick={() => handleSave()}>Save</Button>
