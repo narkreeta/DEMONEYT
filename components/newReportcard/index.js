@@ -16,6 +16,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Edit from './edit';
 import NewstepIndex from '../newStep';
 import CardSaveDetails from '../cardSave/cardSaveDetails';
+import Router from 'next/router';
 
 const style = {
     position: 'absolute',
@@ -41,13 +42,15 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
     const [edit, setEdit] = useState(false);
     const [reportName, setReportName] = useState('');
     const [reportNameError, setReportNameError] = useState('');
+    const [stepError, setStepError] = useState('');
     const [stepOpen, setStepOpen] = useState(false);
     const [cardSaveDetailsOpen, setCardSaveDetailsOpen] = useState(false);
     const [activeEditData, setActiveEditData] = useState('');
 
     const handleBack = () => {
         setEdit(false)
-        setOpen(false)
+        Router.push('/welcome');
+        //setOpen(false)
     }
 
     let today = new Date();
@@ -56,6 +59,8 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
     let yyyy = today.getFullYear();
 
     today = dd + '/' + mm + '/' + yyyy;
+
+    console.log(state, 'state frm new report')
 
     const handleSave = () => {
         if (edit) {
@@ -72,14 +77,15 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
             }
         }
         else {
-            if (reportName !== '') {
-                setCardSaveDetailsOpen(true);
-                localStorage.setItem("ReportCard", JSON.stringify({ name: reportName, step: state }));
-                setReportList([...reportList, { name: reportName, date: today }]);
-                localStorage.setItem("ReportList", JSON.stringify([...reportList, { name: reportName, date: today }]));
+            if (reportName !== '' && state?.length > 0){
+                    setCardSaveDetailsOpen(true);
+                    localStorage.setItem("ReportCard", JSON.stringify({ name: reportName, step: state }));
+                    setReportList([...reportList, { name: reportName, date: today }]);
+                    localStorage.setItem("ReportList", JSON.stringify([...reportList, { name: reportName, date: today }]));
             }
             else {
-                setReportNameError('* You must enter a name for this report')
+                reportName === '' && setReportNameError('* You must enter a name for this report');
+                state?.length == 0 && setStepError('* You must enter a step for this report')
             }
         }
     }
@@ -90,6 +96,10 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
     }
 
     console.log(reportList, 'reportList')
+
+    useEffect(() => {
+        state?.length > 0 && setStepError('');
+    }, [state]);
 
     useEffect(() => {
         setReportList(JSON.parse(localStorage.getItem("ReportList")));
@@ -105,75 +115,65 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
     }
 
     return (
-        <>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
+        <Box className={classes.newReportCardMain}>
+            <Box
+                //sx={style} 
+                className={classes.boxStyleMain}
             >
-                <Fade in={open}>
-                    <Box sx={style} className={classes.boxStyle}>
-                        <CardMedia
-                            component="img"
-                            height="150"
-                            image={Banner.src}
-                            alt="Banner"
-                            title="Contemplative Reptile"
-                        />
-                        <Box className={classes.bannerContent}>
-                            <Typography
-                                gutterBottom
-                                variant="h4"
-                                component="h4"
-                                fontWeight="bold"
-                            >
-                                Creating new report card
-                            </Typography>
-                            <Button tabindex="-1" className={classes.bannerContentBtn} onClick={() => handleClose()}>
-                                <HighlightOffIcon style={{ fontSize: '30px' }} />
-                            </Button>
-                        </Box>
-                        <CardContent className={classes.cardContent}>
-                            {edit ?
-                                <Edit activeEditData={activeEditData} setActiveEditData={setActiveEditData} /> :
-                                <>
-                                    <Input inputProps={{ tabIndex: "-1" }} placeholder='Report card name' className={classes.inputBox} value={reportName} onChange={(e) => handleReportName(e.target.value)} />
-                                    <Typography className={classes.errorMsg} style={{ marginBottom: '10px' }}>{reportNameError}</Typography>
-                                    {state?.map((data) => {
-                                        return (
-                                            <Box className={classes.reportData}>
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <Box className={classes.reportDataIcon}>
-                                                        <RiArrowUpDownFill color='#00D084' />
-                                                    </Box>
-                                                    <Typography style={{ fontWeight: 'bold', color: '#000' }}>{data?.name}</Typography>
-                                                </div>
-                                                <Typography className={classes.reportDataBtn} onClick={() => handleEdit(data)}>Edit</Typography>
+                <CardMedia
+                    component="img"
+                    height="150"
+                    image={Banner.src}
+                    alt="Banner"
+                    title="Contemplative Reptile"
+                />
+                <Box className={classes.bannerContent}>
+                    <Typography
+                        gutterBottom
+                        variant="h4"
+                        component="h4"
+                        fontWeight="bold"
+                    >
+                        Creating new report card
+                    </Typography>
+                    {/* <Button tabindex="-1" className={classes.bannerContentBtn} onClick={() => handleClose()}>
+                        <HighlightOffIcon style={{ fontSize: '30px' }} />
+                    </Button> */}
+                </Box>
+                <CardContent className={classes.cardContent}>
+                    {edit ?
+                        <Edit activeEditData={activeEditData} setActiveEditData={setActiveEditData} /> :
+                        <>
+                            <Input inputProps={{ tabIndex: "-1" }} placeholder='Report card name' className={classes.inputBox} value={reportName} onChange={(e) => handleReportName(e.target.value)} />
+                            <Typography className={classes.errorMsg} style={{ marginBottom: '10px' }}>{reportNameError}</Typography>
+                            {state?.map((data) => {
+                                return (
+                                    <Box className={classes.reportData}>
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <Box className={classes.reportDataIcon}>
+                                                <RiArrowUpDownFill color='#00D084' />
                                             </Box>
-                                        )
-                                    })}
-                                    <Box className={`${classes.reportData} ${classes.addAnotherStep}`}>
-                                        <Box className={classes.reportDataIcon} onClick={() => setStepOpen(true)}>
-                                            <AddIcon color='#00D084' />
-                                        </Box>
-                                        <Typography>Add a step</Typography>
+                                            <Typography style={{ fontSize: '21pt', color: '#000' }}>{data?.name}</Typography>
+                                        </div>
+                                        <Typography className={classes.reportDataBtn} onClick={() => handleEdit(data)}>Edit</Typography>
                                     </Box>
-                                </>
-                            }
-                            <Box className={classes.btnPart}>
-                                <Button tabindex="-1" className={`${classes.btnPartBtn} ${classes.backBtn}`} onClick={() => handleBack()}>Back</Button>
-                                <Button tabindex="-1" className={`${classes.btnPartBtn} ${classes.saveBtn}`} onClick={() => handleSave()}>Save</Button>
+                                )
+                            })}
+                            <Box className={`${classes.reportData} ${classes.addAnotherStep}`} onClick={() => setStepOpen(true)}>
+                                <Box className={classes.reportDataIcon}>
+                                    <AddIcon color='#00D084' />
+                                </Box>
+                                <Typography>Add a step</Typography>
                             </Box>
-                        </CardContent>
+                            <Typography className={classes.errorMsg} style={{ marginBottom: '10px', marginTop: '30px' }}>{stepError}</Typography>
+                        </>
+                    }
+                    <Box className={classes.btnPart}>
+                        <Button tabindex="-1" className={`${classes.btnPartBtn} ${classes.backBtn}`} onClick={() => handleBack()}>Back</Button>
+                        <Button tabindex="-1" className={`${classes.btnPartBtn} ${classes.saveBtn}`} onClick={() => handleSave()}>Save</Button>
                     </Box>
-                </Fade>
-            </Modal>
+                </CardContent>
+            </Box>
             <NewstepIndex
                 stepOpen={stepOpen}
                 setStepOpen={setStepOpen}
@@ -186,7 +186,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                 cardSaveDetailsOpen={cardSaveDetailsOpen}
                 setCardSaveDetailsOpen={setCardSaveDetailsOpen}
             />
-        </>
+        </Box>
     )
 }
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Router from 'next/router'
+import Router from 'next/router';
 import Card from '@mui/material/Card';
 import Banner from '../../public//asset/images/Applogo-Banner.png';
 import CardMedia from '@mui/material/CardMedia';

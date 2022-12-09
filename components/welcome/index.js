@@ -18,6 +18,7 @@ import NewReportIndex from '../newReportcard';
 import ReportIndex from '../report';
 import UpcommingCurrentIndex from '../upcomingCurrentReports';
 import PastReportIndex from '../pastReport';
+import Router from 'next/router';
 
 const WelcomeIndex = () => {
     //const userName = localStorage != undefined ? localStorage.getItem("userName") : '';
@@ -46,20 +47,21 @@ const WelcomeIndex = () => {
     }, []);
 
     const handleSubcontent = (data) => {
-        data == 'New report card' && setOpen(true);
+        //data == 'New report card' && setOpen(true);
         //data == 'Continue last report card' && setReportOpen(true);
+        data == 'New report card' && Router.push('/new-report-card');
     }
 
     const handleTitle = (data) => {
-        console.log(data, 'data frm handleTitle');
-        data == 'Upcoming & current reports' && setUpcommingCurrentReport(true);
-        data == 'Past reports' && setPastReportOpen(true);
+        //data == 'Upcoming & current reports' && setUpcommingCurrentReport(true);
+        //data == 'Past reports' && setPastReportOpen(true);
+        data == 'Upcoming & current reports' &&  Router.push('/upcoming-current-report');
+        data == 'Past reports' && Router.push('/past-reports');
     }
 
     const handleIcon = (data) => {
-        console.log(data, 'data frm handleicon');
-        data == 'Upcoming & current reports' && setUpcommingCurrentReport(true);
-        data == 'Past reports' && setPastReportOpen(true);
+        data == 'Upcoming & current reports' &&  Router.push('/upcoming-current-report');
+        data == 'Past reports' && Router.push('/past-reports');
     }
 
     return (
@@ -123,17 +125,17 @@ const WelcomeIndex = () => {
                     </Box>
                 </CardContent>
             </Card>
-            <NewReportIndex
+            {/* <NewReportIndex
                 open={open} 
                 setOpen={setOpen} 
                 stepsData={stepsData}
                 setStepsData={setStepsData}
-            />
-            <UpcommingCurrentIndex
+            /> */}
+            {/* <UpcommingCurrentIndex
                 upcommingCurrentReport={upcommingCurrentReport}
                 setUpcommingCurrentReport={setUpcommingCurrentReport}
                 userName={userName}
-            />
+            /> */}
             <PastReportIndex 
                 pastReportOpen={pastReportOpen}
                 setPastReportOpen={setPastReportOpen}

@@ -13,6 +13,7 @@ import CardContent from '@mui/material/CardContent';
 import { BiChevronRightCircle } from 'react-icons/bi';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useStylesUpcomingCurrent } from './style';
+import Router from 'next/router';
 
 const style = {
     position: 'absolute',
@@ -30,81 +31,72 @@ const style = {
     borderBottom: '5px solid #00D084'
 };
 
-const UpcommingCurrentIndex = ({ upcommingCurrentReport, setUpcommingCurrentReport, userName }) => {
-    const handleClose = () => setUpcommingCurrentReport(false);
+const UpcommingCurrentIndex = ({ upcommingCurrentReport, setUpcommingCurrentReport }) => {
+    const handleClose = () => {
+        Router.push('/welcome');
+        //setUpcommingCurrentReport(false);
+    }
     const classesWelcome = useStylesWelcome();
     const classes = useStylesUpcomingCurrent();
     const newReportClasses = useStylesNewreport();
 
     const [reportList, setReportList] = useState([]);
+    const [userName, setUserName] = useState('');
     console.log(reportList, 'reportList upcoming')
 
     useEffect(() => {
         localStorage != undefined && setReportList(JSON.parse(localStorage.getItem("ReportList")));
+        localStorage != undefined ? setUserName(localStorage.getItem("userName")) : setUserName('');
     }, []);
 
     return (
-        <div>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={upcommingCurrentReport}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={upcommingCurrentReport}>
-                    <Box sx={style} className={newReportClasses.boxStyle}>
-                        <CardMedia
-                            component="img"
-                            height="150"
-                            image={Banner.src}
-                            alt="Banner"
-                            title="Contemplative Reptile"
-                        />
-                        <Box className={newReportClasses.bannerContent}>
-                            <Typography
-                                gutterBottom
-                                variant="h4"
-                                component="h4"
-                                fontWeight="bold"
-                            >
-                               {userName}
-                            </Typography>
-                            <Button className={newReportClasses.bannerContentBtn} onClick={() => handleClose()}>
-                                <HighlightOffIcon style={{ fontSize: '30px' }} />
-                            </Button>
-                        </Box>
-                        <Box className={`${classesWelcome.cardContentTitle} ${classes.cardContentTitle}`}>
-                            <Typography variant="h5">Upcoming & current reports</Typography>
-                            <Button onClick={() => handleClose()}>Back</Button>
-                        </Box>
-                        <CardContent className={classesWelcome.cardContent}>
-                            <Box className={classesWelcome.accordionMain}>
-                                <div className={classesWelcome.accordionDetails}>
-                                    <Typography>
-                                        {reportList?.map((data) => {
-                                            return (
-                                                <Box className={classesWelcome.accordionDetailsBox}>
-                                                    <Button className={classesWelcome.accordionDetailsBoxBtn}>
-                                                        <BiChevronRightCircle className={classesWelcome.accordionDetailsBoxIcon} />
-                                                        <Typography className={classesWelcome.accordionDetailsBoxContent}>
-                                                            {`${data?.date} | ${data?.name}`}
-                                                        </Typography>
-                                                    </Button>
-                                                </Box>
-                                            )
-                                        })}
-                                    </Typography>
-                                </div>
-                            </Box>
-                        </CardContent>
+        <div className={classes.upcomingCurrentMain}>
+            <Box
+                //sx={style} 
+                className={`${newReportClasses.boxStyle} ${classes.boxStyle}`}>
+                <CardMedia
+                    component="img"
+                    height="150"
+                    image={Banner.src}
+                    alt="Banner"
+                    title="Contemplative Reptile"
+                />
+                <Box className={newReportClasses.bannerContent}>
+                    <Typography
+                        gutterBottom
+                        variant="h4"
+                        component="h4"
+                        fontWeight="bold"
+                    >
+                        {userName}
+                    </Typography>
+                    {/* <Button className={newReportClasses.bannerContentBtn} onClick={() => handleClose()}>
+                        <HighlightOffIcon style={{ fontSize: '30px' }} />
+                    </Button> */}
+                </Box>
+                <Box className={`${classesWelcome.cardContentTitle} ${classes.cardContentTitle}`}>
+                    <Typography variant="h5">Upcoming & current reports</Typography>
+                    <Button onClick={() => handleClose()}>Back</Button>
+                </Box>
+                <CardContent className={classesWelcome.cardContent}>
+                    <Box className={classesWelcome.accordionMain}>
+                        <div className={classesWelcome.accordionDetails}>
+                                {reportList?.map((data) => {
+                                    return (
+                                        <Box className={classesWelcome.accordionDetailsBox}>
+                                            <Button className={classesWelcome.accordionDetailsBoxBtn}>
+                                                <BiChevronRightCircle className={classesWelcome.accordionDetailsBoxIcon} />
+                                                <Typography className={classesWelcome.accordionDetailsBoxContent}>
+                                                    {`${data?.date} | ${data?.name}`}
+                                                </Typography>
+                                            </Button>
+                                        </Box>
+                                    )
+                                })}
+                        </div>
                     </Box>
-                </Fade>
-            </Modal>
+                </CardContent>
+            </Box>
         </div>
     )
 }
