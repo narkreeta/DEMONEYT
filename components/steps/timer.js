@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import { Input } from '@mui/material';
+import { Input, TextField } from '@mui/material';
 import { useStyleSteps } from './style';
 import Typography from '@mui/material/Typography';
 
@@ -32,8 +32,8 @@ const Timer = ({ title, stepQueAns, setStepQueAns, activeStepData }) => {
         <div>
             <Typography variant='h5' className={classesSteps.feedbackTitle} >{title}</Typography>
             <Box className={classesSteps.timerTop}>
-                <Input type='number' className={classesSteps.timerInput} value={hour} onChange={(e) => setHour(e.target.value)} />
-                <Input type='number' className={classesSteps.timerInput} value={minute} onChange={(e) => setMinute(e.target.value)} />
+                <TextField type='number' InputProps={{ inputProps: { min: 1 } }} className={classesSteps.timerInput} value={hour} onChange={(e) => setHour(e.target.value)} />
+                <TextField type='number' InputProps={{ inputProps: { min: 0, max: 60 } }} className={classesSteps.timerInput} value={minute} onChange={(e) => setMinute(e.target.value)} />
             </Box>
         </div>
     )

@@ -53,6 +53,8 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
   const [stepQueAns, setStepQueAns] = useState([]);
   const steps = stepData;
   const handleClose = () => setReportOpen(false);
+
+  console.log(stepQueAns, 'stepQueAns')
   
   const isStepOptional = (step) => {
     //return step === 1;
@@ -73,6 +75,9 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
     if (activeStep === steps?.length - 1){
+      console.log(stepQueAns, 'stepQueAns before save')
+      let arr = stepQueAns?.filter((data) => data.name == 'Date')?.[0];
+      console.log(typeof(arr?.ans), 'arr ans')
       localStorage.setItem("LastReviewReport", JSON.stringify(stepQueAns));
       localStorage.setItem("LastReviewReportName", reportName);
     }
@@ -112,7 +117,7 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
 
   return (
     <>
-      <Modal
+      {/* <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={reportOpen}
@@ -123,8 +128,12 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
           timeout: 500,
         }}
       >
-        <Fade in={reportOpen}>
-          <Box sx={style} className={classesNewreport.boxStyle}>
+        <Fade in={reportOpen}> */}
+        <Box className={classesReport.stepperMain}>
+          <Box
+            //sx={style} 
+            className={classesNewreport.boxStyleMain}
+          >
             <CardMedia
               component="img"
               height="150"
@@ -147,19 +156,22 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
                 ) : (
                   <div className={classesReport.bannerTitle}>
                     <Typography>Making a report: <span style={{ fontWeight: 'bold' }}>{reportName}</span></Typography>
-                    <Typography>{activeStepData?.name} {activeStepData?.type}</Typography>
+                    <Typography>
+                      {activeStepData?.name} 
+                      {/* {activeStepData?.type} */}
+                    </Typography>
                   </div>
                 )
                 }
               </Typography>
-              <Button tabIndex="-1" className={classesNewreport.bannerContentBtn} onClick={() => handleClose()}>
+              {/* <Button tabIndex="-1" className={classesNewreport.bannerContentBtn} onClick={() => handleClose()}>
                 <HighlightOffIcon style={{ fontSize: '30px' }} />
-              </Button>
+              </Button> */}
             </Box>
             <CardContent className={classesNewreport.cardContent}>
               <Box>
                 {activeStep !== steps?.length && <Box className={classesReport.stepperTop}>
-                  <Typography variant='h5' className={classesReport.stepperTopLeft}>Step 1 of {activeStep + 1}</Typography>
+                  <Typography variant='h5' className={classesReport.stepperTopLeft}>Step {activeStep + 1} of {steps?.length}</Typography>
                   <Stepper activeStep={activeStep} className={classesReport.stepperTopRight}>
                     {steps?.map((label, index) => {
                       const stepProps = {};
@@ -275,8 +287,9 @@ const ReportIndex = ({ reportOpen, setReportOpen }) => {
               </Box>
             </CardContent>
           </Box>
-        </Fade>
-      </Modal>
+        </Box>
+        {/* </Fade>
+      </Modal> */}
       <ReportSave reportSaved={reportSaved} setReportSaved={setReportSaved} />
     </>
   )

@@ -161,7 +161,7 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
 
     return (
         <>
-            <Modal
+            {/* <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={stepOpen}
@@ -172,8 +172,12 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                     timeout: 500,
                 }}
             >
-                <Fade in={stepOpen}>
-                    <Box sx={style} className={newReportClasses.boxStyle}>
+                <Fade in={stepOpen}> */}
+                <Box>
+                    <Box
+                        //sx={style} 
+                        className={newReportClasses.boxStyleMain}
+                    >
                         <CardMedia
                             component="img"
                             height="150"
@@ -331,8 +335,9 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                             </Box>
                         </CardContent>
                     </Box>
-                </Fade>
-            </Modal>
+                </Box>
+                {/* </Fade>
+            </Modal> */}
         </>
     )
 }

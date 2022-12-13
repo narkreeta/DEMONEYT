@@ -5,6 +5,9 @@ export const useStylesPastReportPage = makeStyles({
         maxWidth: '80%',
         margin: '2rem auto',
         width: '100%',
+        ['@media (max-width:767px)']: {
+            maxWidth: '90%'
+        }
     },
     boxStyle: {
         position: 'relative',

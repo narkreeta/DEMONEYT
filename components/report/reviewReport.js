@@ -13,9 +13,24 @@ const ReviewReport = () => {
     useEffect(() => {
         if (localStorage != undefined) {
             let data = localStorage != undefined ? JSON.parse(localStorage.getItem("LastReviewReport")) : '';
-            setData(data);
+            console.log(data, 'data frm reviewreport');
+            setData(data)
+            // let date = data?.filter((val) => val.name == 'Date')?.[0]?.ans;
+            // date = date.split('T')[0];
+            // console.log(date, 'date')
+            // let dd = date.split('-').pop();
+            // console.log(dd, 'dd')
+            // let mm = date.split('-')[1];
+            // let yyyy = date.split('-')[0];
+            // let finalDate = dd + '/' + mm + '/' + yyyy;
+            // let updateData = [...data];
+            // let updateVal = updateData?.filter((val) => val.name == 'Date')?.[0];
+            // updateVal['ans'] = finalDate;
+            // setData(updateData);
         }
     }, []);
+
+    console.log(Data, 'Data review report');
 
     return (
         <Box>

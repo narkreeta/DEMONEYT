@@ -19,7 +19,7 @@ const Adults = ({title, stepQueAns, setStepQueAns, activeStepData}) => {
     // };
     // console.log(number, 'number')
 
-    const upperLimit = 10;
+    //const upperLimit = 10;
     const lowerLimit = 0;
     const [count, setCount] = useState(
         stepQueAns.filter((val) => val?.type == 'Counter')?.[0]?.ans ? 
@@ -27,7 +27,7 @@ const Adults = ({title, stepQueAns, setStepQueAns, activeStepData}) => {
     );
 
     const increment = () => {
-        if(count < upperLimit)
+        //if(count < upperLimit)
             setCount(_count => _count + 1)
     }
 
@@ -77,7 +77,7 @@ const Adults = ({title, stepQueAns, setStepQueAns, activeStepData}) => {
                     <div className={classesSteps.countPlusMinusSub} style={{ borderLeft: '1px solid #bfbfbf', borderRight: '1px solid #bfbfbf' }}>
                         <Box className={classesSteps.counterSection}>
                             <Box className={`${classesSteps.counterTop} ${classesSteps.counterTopAbove}`}>
-                                {count !== lowerLimit ? count - 1 : ''}
+                                {count !== lowerLimit ? count - 2 : ''}
                             </Box>
                             <Box className={classesSteps.counterTop}>
                                 {count !== lowerLimit ? count - 1 : ''}
@@ -86,10 +86,12 @@ const Adults = ({title, stepQueAns, setStepQueAns, activeStepData}) => {
                                 {count}
                             </Box>
                             <Box className={classesSteps.counterBottom}>
-                                {count !== upperLimit ? count + 1 : ''}
+                                {/* {count !== upperLimit ? count + 1 : ''} */}
+                                {count + 1}
                             </Box>
                             <Box className={`${classesSteps.counterBottom} ${classesSteps.counterBottomBelow}`}>
-                                {count !== upperLimit ? count + 1 : ''}
+                                {/* {count !== upperLimit ? count + 1 : ''} */}
+                                {count + 2}
                             </Box>
                         </Box>
                     </div>

@@ -30,7 +30,7 @@ const PastReportPageIndex = () => {
 
     return (
         <Box className={classes.pastReportMain}>
-            <Box className={`${newReportClasses.boxStyle} ${classes.boxStyle}`}>
+            <Box className={`${newReportClasses.boxStyleMain}`}>
                 <CardMedia
                     component="img"
                     height="150"

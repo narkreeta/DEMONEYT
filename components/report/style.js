@@ -1,6 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStylesReport = makeStyles({
+    stepperMain: {
+        maxWidth: '80%',
+        margin: '2rem auto',
+        width: '100%',
+        ['@media (max-width:767px)']: {
+            maxWidth: '90%'
+        }
+    },
     stepperTop: {
         display: 'flex',
         borderBottom: '1px solid #cdcdcd',

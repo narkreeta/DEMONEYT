@@ -5,6 +5,9 @@ export const useStylesNewreport = makeStyles({
         maxWidth: '80%',
         margin: '2rem auto',
         width: '100%',
+        ['@media (max-width:767px)']: {
+            maxWidth: '90%'
+        }
     },
     boxStyleMain: {
         '&::-webkit-scrollbar': {
@@ -19,9 +22,24 @@ export const useStylesNewreport = makeStyles({
         position: 'relative',
         boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
         height: 'auto',
-        maxWidth: '90%',
+        //maxWidth: '90%',
+        maxWidth: '1320px',
         margin: 'auto',
-        borderBottom: '5px solid #00D084'
+        borderBottom: '5px solid #00D084',
+        // ['@media (max-width:767px)']: {
+        //     maxWidth: '90%'
+        // }
+    },
+    boxStyle: {
+        '&::-webkit-scrollbar': {
+            width: '10px'
+        },
+        '&::-webkit-scrollbar-track': {
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#00D084',
+            borderRadius: '10px'
+        },
     },
     bannerContent: {
         display: 'flex',

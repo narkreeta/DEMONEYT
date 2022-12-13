@@ -6,6 +6,9 @@ export const useStylesUpcomingCurrent = makeStyles({
         maxWidth: '80%',
         margin: '2rem auto',
         width: '100%',
+        ['@media (max-width:767px)']: {
+            maxWidth: '90%'
+        }
     },
     boxStyle: {
         position: 'relative',
@@ -30,12 +33,19 @@ export const useStylesUpcomingCurrent = makeStyles({
             lineHeight: '0.7',
             fontWeight: 'bold',
             textTransform: 'capitalize',
-            fontSize: '17px'
+            fontSize: '17px',
+            ['@media (max-width:767px)']: {
+                marginTop: '20px'
+            }
         },
         '& h5': {
             color: '#000',
             fontWeight: 'bold',
             fontSize: '22px'
+        },
+        ['@media (max-width:767px)']: {
+            flexDirection: 'column',
+            padding: '20px 15px !important',
         }
     },
     bannerContentBtn: {

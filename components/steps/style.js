@@ -56,11 +56,16 @@ export const useStyleSteps = makeStyles({
         minHeight: '200px',
         padding: '15px',
         boxShadow: '0px 0px 10px #bfbfbf inset',
-        fontWeight: 'bold !important',
+        //fontWeight: 'bold !important',
         borderRadius: '15px',
         //opacity: '25%',
         border: '0',
         color: '#000',
+        fontSize: '14pt',
+        fontFamily: 'arial',
+        '&:focus': {
+            outline: 'none'
+        }
     },
     feedbackTitle: {
         textAlign: 'center',
@@ -103,6 +108,9 @@ export const useStyleSteps = makeStyles({
         display: 'flex',
         boxShadow: '0px 0px 10px #ddd',
         height: '80px',
+        maxWidth: '350px',
+        width: '100%',
+        float: 'right',
         '& svg': {
             color: '#808080',
             height: '40px',
@@ -222,7 +230,7 @@ export const useStyleSteps = makeStyles({
         boxShadow: '0px 0px 10px #ddd',
         margin: 'auto',
         marginTop: '30px',
-        "& div:first-child": {
+        "& div.MuiFormControl-root:first-child": {
             borderRight: '1px solid #cdcdcd',
         },
     },
@@ -230,6 +238,13 @@ export const useStyleSteps = makeStyles({
         width: '80px',
         height: '100%',
         padding: '10px',
+        "& div.MuiOutlinedInput-root": {
+            height: '100%',
+        },
+        "& fieldset": {
+            height: '100%',
+            border: '0'
+        },
         "&:before, &:after": {
             content: 'none !important'
         },

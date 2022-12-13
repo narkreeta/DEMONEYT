@@ -53,7 +53,7 @@ const UpcommingCurrentIndex = ({ upcommingCurrentReport, setUpcommingCurrentRepo
         <div className={classes.upcomingCurrentMain}>
             <Box
                 //sx={style} 
-                className={`${newReportClasses.boxStyle} ${classes.boxStyle}`}>
+                className={`${newReportClasses.boxStyleMain}`}>
                 <CardMedia
                     component="img"
                     height="150"

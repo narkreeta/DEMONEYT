@@ -77,11 +77,11 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
             }
         }
         else {
-            if (reportName !== '' && state?.length > 0){
-                    setCardSaveDetailsOpen(true);
-                    localStorage.setItem("ReportCard", JSON.stringify({ name: reportName, step: state }));
-                    setReportList([...reportList, { name: reportName, date: today }]);
-                    localStorage.setItem("ReportList", JSON.stringify([...reportList, { name: reportName, date: today }]));
+            if (reportName !== '' && state?.length > 0) {
+                setCardSaveDetailsOpen(true);
+                localStorage.setItem("ReportCard", JSON.stringify({ name: reportName, step: state }));
+                setReportList([...reportList, { name: reportName, date: today }]);
+                localStorage.setItem("ReportList", JSON.stringify([...reportList, { name: reportName, date: today }]));
             }
             else {
                 reportName === '' && setReportNameError('* You must enter a name for this report');
@@ -116,6 +116,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
 
     return (
         <Box className={classes.newReportCardMain}>
+            {!stepOpen &&
             <Box
                 //sx={style} 
                 className={classes.boxStyleMain}
@@ -174,14 +175,17 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
                     </Box>
                 </CardContent>
             </Box>
-            <NewstepIndex
-                stepOpen={stepOpen}
-                setStepOpen={setStepOpen}
-                stepsData={stepsData}
-                setStepsData={setStepsData}
-                state={state}
-                setState={setState}
-            />
+            }
+            {stepOpen &&
+                <NewstepIndex
+                    stepOpen={stepOpen}
+                    setStepOpen={setStepOpen}
+                    stepsData={stepsData}
+                    setStepsData={setStepsData}
+                    state={state}
+                    setState={setState}
+                />
+            }
             <CardSaveDetails
                 cardSaveDetailsOpen={cardSaveDetailsOpen}
                 setCardSaveDetailsOpen={setCardSaveDetailsOpen}
