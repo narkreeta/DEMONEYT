@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CardMedia from '@mui/material/CardMedia';
@@ -14,6 +14,8 @@ import { useStylesCardSave } from './style';
 import { Input } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import CardSave from './cardSave';
+import axios from 'axios';
+import { postAxios } from '../../public/asset/axios/apiHandler';
 
 const style = {
     position: 'absolute',
@@ -31,107 +33,162 @@ const style = {
     borderBottom: '5px solid #00D084'
 };
 
-const CardSaveDetails = ({cardSaveDetailsOpen, setCardSaveDetailsOpen}) => {
-  const handleClose = () => setCardSaveDetailsOpen(false);
-  const newReportClasses = useStylesNewreport();
-  const classes = useStylesCardSave();
-  const [reportSaved, setReportSaved] = useState(false);
+const CardSaveDetails = ({ cardSaveDetailsOpen, setCardSaveDetailsOpen, state, reportName }) => {
+    const handleClose = () => setCardSaveDetailsOpen(false);
+    const newReportClasses = useStylesNewreport();
+    const classes = useStylesCardSave();
+    const [reportSaved, setReportSaved] = useState(false);
+    const [stepsData, setStepsData] = useState([]);
+    const [startTime, setStartTime] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endTime, setEndTime] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [emailCard, setEmailCard] = useState('');
+    const [emailReport, setEmailReport] = useState('');
 
-  return (
-    <>
-        <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={cardSaveDetailsOpen}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-                timeout: 500,
-            }}
-        >
-            <Fade in={cardSaveDetailsOpen}>
-                <Box sx={style} className={newReportClasses.boxStyle}>
-                    <CardMedia
-                        component="img"
-                        height="150"
-                        image={Banner.src}
-                        alt="Banner"
-                        title="Contemplative Reptile"
-                    />
-                    <Box className={newReportClasses.bannerContent}>
-                        <Typography
-                            gutterBottom
-                            variant="h4"
-                            component="h4"
-                            fontWeight="bold"
-                        >
-                            Report card saved!
-                        </Typography>
-                        <Button className={newReportClasses.bannerContentBtn} onClick={() => handleClose()}>
-                            <HighlightOffIcon style={{ fontSize: '30px' }} />
-                        </Button>
-                    </Box>
-                    <CardContent className={`${newReportClasses.cardContent} ${classes.cardContent}`}>
-                        <Typography 
-                            variant="h4" 
-                            className={classes.cardSaveDetailsTitle}
-                        >
-                            Card: Art Class
-                        </Typography>
-                        <Box>
-                            <Box className={classes.cardSaveDetailsDateTime}>
-                                <Box>
-                                    <Typography className={classes.cardSaveDetailsDateTimeFieldTitle} >Start time and date</Typography>
-                                    <Box className={classes.timeDateTop}>
-                                        <TextField
-                                            id="time"
-                                            type="time"
-                                            className={classes.cardSaveDetailsTime}
-                                        />
-                                        <TextField 
-                                            id="date"
-                                            type="date"
-                                            className={classes.cardSaveDetailsDate}
-                                        />
+    useEffect(() => {
+        let arr = [];
+        state?.map((data, i) => {
+            arr.push({name: data?.name, order: i, type: data?.apiType})
+        })
+        setStepsData(arr);
+    }, [state]);
+
+    console.log(stepsData, 'stepsData')
+
+    const handleSave = async () => {
+        const cardDetail = {
+            name: reportName,
+            clientId: "nfYzRD5tnEcPkl1ttD0fc",
+            startDate: `${startDate} ${startTime}:00`,
+            endDate: `${endDate} ${endTime}:00`,
+            sendTo: [
+                emailCard,
+                emailReport
+            ],
+            sendAnswersTo: [
+                emailReport
+            ],
+            steps: stepsData
+        }
+        const data = await postAxios('http://localhost:8000/card/create', cardDetail);
+        console.log(data, 'data frm axios')
+        setReportSaved(true)
+    }
+
+    return (
+        <>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={cardSaveDetailsOpen}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={cardSaveDetailsOpen}>
+                    <Box sx={style} className={newReportClasses.boxStyle}>
+                        <CardMedia
+                            component="img"
+                            height="150"
+                            image={Banner.src}
+                            alt="Banner"
+                            title="Contemplative Reptile"
+                        />
+                        <Box className={newReportClasses.bannerContent}>
+                            <Typography
+                                gutterBottom
+                                variant="h4"
+                                component="h4"
+                                fontWeight="bold"
+                            >
+                                Report card saved!
+                            </Typography>
+                            <Button className={newReportClasses.bannerContentBtn} onClick={() => handleClose()}>
+                                <HighlightOffIcon style={{ fontSize: '30px' }} />
+                            </Button>
+                        </Box>
+                        <CardContent className={`${newReportClasses.cardContent} ${classes.cardContent}`}>
+                            <Typography
+                                variant="h4"
+                                className={classes.cardSaveDetailsTitle}
+                            >
+                                Card: Art Class
+                            </Typography>
+                            <Box>
+                                <Box className={classes.cardSaveDetailsDateTime}>
+                                    <Box>
+                                        <Typography className={classes.cardSaveDetailsDateTimeFieldTitle} >Start time and date</Typography>
+                                        <Box className={classes.timeDateTop}>
+                                            <TextField
+                                                id="time"
+                                                type="time"
+                                                className={classes.cardSaveDetailsTime}
+                                                value={startTime}
+                                                onChange={(e) => setStartTime(e.target.value)}
+                                            />
+                                            <TextField
+                                                id="date"
+                                                type="date"
+                                                className={classes.cardSaveDetailsDate}
+                                                value={startDate}
+                                                onChange={(e) => setStartDate(e.target.value)}
+                                            />
+                                        </Box>
                                     </Box>
-                                </Box>
-                                <Box style={{ marginTop: '30px' }}>
-                                    <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>End time and date</Typography>
-                                    <Box className={classes.timeDateTop}>
-                                        <TextField
-                                            id="time"
-                                            type="time"
-                                            className={classes.cardSaveDetailsTime}
-                                        />
-                                        <TextField 
-                                            id="date"
-                                            type="date"
-                                            className={classes.cardSaveDetailsDate}
-                                        />
+                                    <Box style={{ marginTop: '30px' }}>
+                                        <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>End time and date</Typography>
+                                        <Box className={classes.timeDateTop}>
+                                            <TextField
+                                                id="time"
+                                                type="time"
+                                                className={classes.cardSaveDetailsTime}
+                                                value={endTime}
+                                                onChange={(e) => setEndTime(e.target.value)}
+                                            />
+                                            <TextField
+                                                id="date"
+                                                type="date"
+                                                className={classes.cardSaveDetailsDate}
+                                                value={endDate}
+                                                onChange={(e) => setEndDate(e.target.value)}
+                                            />
+                                        </Box>
                                     </Box>
                                 </Box>
                             </Box>
-                        </Box>
-                        <Box className={classes.cardSaveDetailsDateTimeInputBox}>
-                            <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>Email address for card recipients</Typography>
-                            <Input placeholder='Use a comma to separate addresses' className={classes.cardSaveDetailsDateTimeInputBoxInput} />
-                        </Box>
-                        <Box className={classes.cardSaveDetailsDateTimeInputBox}>
-                            <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>Email address for report recipients</Typography>
-                            <Input placeholder='Use a comma to separate addresses' className={classes.cardSaveDetailsDateTimeInputBoxInput} />
-                        </Box>
-                        <Box className={newReportClasses.btnPart}>
-                            <Button onClick={() => handleClose()} className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`}>Back</Button>
-                            <Button onClick={() => setReportSaved(true)} className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`}>Save</Button>
-                        </Box>
-                    </CardContent>
-                </Box>
-            </Fade>
-        </Modal>
-        <CardSave reportSaved={reportSaved} setReportSaved={setReportSaved} />
-    </>
-  )
+                            <Box className={classes.cardSaveDetailsDateTimeInputBox}>
+                                <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>Email address for card recipients</Typography>
+                                <Input 
+                                    placeholder='Use a comma to separate addresses' 
+                                    className={classes.cardSaveDetailsDateTimeInputBoxInput} 
+                                    value={emailCard}
+                                    onChange={(e) => setEmailCard(e.target.value)}
+                                />
+                            </Box>
+                            <Box className={classes.cardSaveDetailsDateTimeInputBox}>
+                                <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>Email address for report recipients</Typography>
+                                <Input 
+                                    placeholder='Use a comma to separate addresses' 
+                                    className={classes.cardSaveDetailsDateTimeInputBoxInput}
+                                    value={emailReport}
+                                    onChange={(e) => setEmailReport(e.target.value)}
+                                />
+                            </Box>
+                            <Box className={newReportClasses.btnPart}>
+                                <Button onClick={() => handleClose()} className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`}>Back</Button>
+                                <Button onClick={() => handleSave()} className={`${newReportClasses.btnPartBtn} ${newReportClasses.saveBtn}`}>Save</Button>
+                            </Box>
+                        </CardContent>
+                    </Box>
+                </Fade>
+            </Modal>
+            <CardSave reportSaved={reportSaved} setReportSaved={setReportSaved} />
+        </>
+    )
 }
 
 export default CardSaveDetails

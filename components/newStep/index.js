@@ -62,13 +62,13 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
 
     const handleClose = () => setStepOpen(false);
     const [addData, setAddData] = useState([
-        { name: 'Timer', data: [] },
-        { name: 'Date', data: [] },
+        { name: 'Timer', apiType: 'TIME', data: [] },
+        { name: 'Date', apiType: 'DATE', data: [] },
         //{ name: 'Counter', data: ['Attendees', 'Children', 'Adults', 'Boys', 'Girls', 'Over 18', 'Under 18', 'Over 60s'] },
-        { name: 'Counter', data: [{ id: Math.random().toString(16).slice(2), value: '' }] },
-        { name: 'A / B Choice', data: [] },
-        { name: 'Text field', data: [] },
-        { name: 'Rating', data: [] }
+        { name: 'Counter', apiType: 'COUNTER', data: [{ id: Math.random().toString(16).slice(2), value: '' }] },
+        { name: 'A / B Choice', apiType: 'A/B CHOICE', data: [] },
+        { name: 'Text field', apiType: 'TEXT', data: [] },
+        { name: 'Rating', apiType: 'Rate', data: [] }
     ]);
     const [counterData, setCounterData] = useState([]);
     const [expanded, setExpanded] = useState('');
@@ -114,7 +114,12 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
         stepName === '' && setStepNameError('* You must enter a name for this step');
         value === '' && setValueError('* You must select an option');
         if (stepName !== '' && value !== '') {
-            value !== '' && setState([...state, { id: Math.random().toString(16).slice(2), name: stepName, type: value }]);
+            value !== '' && setState([...state, { 
+                id: Math.random().toString(16).slice(2), 
+                name: stepName, 
+                type: value,
+                apiType: addData?.filter((data) => data.name == value)?.[0]?.apiType
+            }]);
             setStepName('');
             setValue('');
             handleClose();

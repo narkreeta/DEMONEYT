@@ -60,7 +60,7 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
 
     today = dd + '/' + mm + '/' + yyyy;
 
-    console.log(state, 'state frm new report')
+    console.log(state, 'state frm new report');
 
     const handleSave = () => {
         if (edit) {
@@ -189,6 +189,8 @@ const NewReportIndex = ({ open, setOpen, stepsData, setStepsData }) => {
             <CardSaveDetails
                 cardSaveDetailsOpen={cardSaveDetailsOpen}
                 setCardSaveDetailsOpen={setCardSaveDetailsOpen}
+                state={state}
+                reportName={reportName}
             />
         </Box>
     )
