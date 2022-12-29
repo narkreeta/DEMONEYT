@@ -176,5 +176,13 @@ export const useStylesNewstep = makeStyles({
         fontWeight: 'bold !important',
         position: 'relative',
         top: '-10px'
+    },
+    textFieldImg: {
+        width: '160px',
+        height: '76px'
+    },
+    ratingImg: {
+        width: '160px',
+        height: '76px'
     }
 });

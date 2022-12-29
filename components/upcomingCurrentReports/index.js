@@ -14,6 +14,7 @@ import { BiChevronRightCircle } from 'react-icons/bi';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useStylesUpcomingCurrent } from './style';
 import Router from 'next/router';
+import { getAxios } from '../../public/asset/axios/apiHandler';
 
 const style = {
     position: 'absolute',
@@ -45,8 +46,15 @@ const UpcommingCurrentIndex = ({ upcommingCurrentReport, setUpcommingCurrentRepo
     console.log(reportList, 'reportList upcoming')
 
     useEffect(() => {
-        localStorage != undefined && setReportList(JSON.parse(localStorage.getItem("ReportList")));
-        localStorage != undefined ? setUserName(localStorage.getItem("userName")) : setUserName('');
+        (async function() {
+            localStorage != undefined && setReportList(JSON.parse(localStorage.getItem("ReportList")));
+            localStorage != undefined ? setUserName(localStorage.getItem("userName")) : setUserName('');
+
+            let tokenStr = localStorage.getItem("Token");
+            console.log(tokenStr, 'tokenStr')
+            const data = await getAxios('http://localhost:8000/card/in-progress', tokenStr);
+            console.log(data, 'data frm axios')
+        })();
     }, []);
 
     return (

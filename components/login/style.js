@@ -71,5 +71,11 @@ export const useStyles = makeStyles(theme => ({
     },
     buttonHelp: {
         border: '1px solid red'
+    },
+    errorMsg: {
+        margin: '25px 0px',
+        color: 'red',
+        fontSize: '14px',
+        fontWeight: 'bold'
     }
 }));

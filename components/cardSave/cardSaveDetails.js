@@ -39,17 +39,35 @@ const CardSaveDetails = ({ cardSaveDetailsOpen, setCardSaveDetailsOpen, state, r
     const classes = useStylesCardSave();
     const [reportSaved, setReportSaved] = useState(false);
     const [stepsData, setStepsData] = useState([]);
+
     const [startTime, setStartTime] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endTime, setEndTime] = useState('');
     const [endDate, setEndDate] = useState('');
     const [emailCard, setEmailCard] = useState('');
     const [emailReport, setEmailReport] = useState('');
+    const [error, setError] = useState({
+        startTime: '',
+        startDate: '',
+        endTime: '',
+        endDate: '',
+        emailCard: '',
+        emailReport: ''
+    });
+
+    const [cardData, setCardData] = useState([
+        {name: 'startTime', val: '', error: ''},
+        {name: 'startDate', val: '', error: ''},
+        {name: 'endTime', val: '', error: ''},
+        {name: 'endDate', val: '', error: ''},
+        {name: 'emailCard', val: '', error: ''},
+        {name: 'emailReport', val: '', error: ''},
+    ]);
 
     useEffect(() => {
         let arr = [];
         state?.map((data, i) => {
-            arr.push({name: data?.name, order: i, type: data?.apiType})
+            arr.push({ name: data?.name, order: i, type: data?.apiType })
         })
         setStepsData(arr);
     }, [state]);
@@ -57,23 +75,41 @@ const CardSaveDetails = ({ cardSaveDetailsOpen, setCardSaveDetailsOpen, state, r
     console.log(stepsData, 'stepsData')
 
     const handleSave = async () => {
-        const cardDetail = {
-            name: reportName,
-            clientId: "nfYzRD5tnEcPkl1ttD0fc",
-            startDate: `${startDate} ${startTime}:00`,
-            endDate: `${endDate} ${endTime}:00`,
-            sendTo: [
-                emailCard,
-                emailReport
-            ],
-            sendAnswersTo: [
-                emailReport
-            ],
-            steps: stepsData
-        }
-        const data = await postAxios('http://localhost:8000/card/create', cardDetail);
-        console.log(data, 'data frm axios')
-        setReportSaved(true)
+        let arr = [];
+        cardData?.map((data) => {
+            arr.push({
+                name: data?.name,
+                val: data?.val,
+                error: data?.val == '' ? 'This Field is required' : ''
+            })
+        })
+        console.log(arr, 'arr')
+        setCardData(arr);
+        // const cardDetail = {
+        //     name: reportName,
+        //     startDate: `${startDate} ${startTime}:00`,
+        //     endDate: `${endDate} ${endTime}:00`,
+        //     sendTo: [
+        //         emailCard,
+        //         emailReport
+        //     ],
+        //     sendAnswersTo: [
+        //         emailReport
+        //     ],
+        //     steps: stepsData
+        // }
+        // let tokenStr = localStorage.getItem("Token");
+        // console.log(tokenStr, 'tokenStr')
+        // const data = await postAxios('http://localhost:8000/card/create', cardDetail, tokenStr);
+        // console.log(data, 'data frm axios')
+        // setReportSaved(true)
+    }
+
+    const handleChange = (val, name) => {
+        let arr = [...cardData];
+        let arr2 = arr?.filter((data) => data?.name == name)?.[0];
+        arr2['val'] = val;
+        setCardData(arr);
     }
 
     return (
@@ -127,16 +163,18 @@ const CardSaveDetails = ({ cardSaveDetailsOpen, setCardSaveDetailsOpen, state, r
                                                 id="time"
                                                 type="time"
                                                 className={classes.cardSaveDetailsTime}
-                                                value={startTime}
-                                                onChange={(e) => setStartTime(e.target.value)}
+                                                value={cardData?.filter((data) => data?.name == 'startTime')?.[0]?.val}
+                                                onChange={(e) => handleChange(e.target.value, 'startTime')}
                                             />
+                                            <Typography>{cardData?.filter((data) => data?.name == 'startTime')?.[0]?.error}</Typography>
                                             <TextField
                                                 id="date"
                                                 type="date"
                                                 className={classes.cardSaveDetailsDate}
-                                                value={startDate}
-                                                onChange={(e) => setStartDate(e.target.value)}
+                                                value={cardData?.filter((data) => data?.name == 'startDate')?.[0]?.val}
+                                                onChange={(e) => handleChange(e.target.value, 'startDate')}
                                             />
+                                            <Typography>{cardData?.filter((data) => data?.name == 'startDate')?.[0]?.error}</Typography>
                                         </Box>
                                     </Box>
                                     <Box style={{ marginTop: '30px' }}>
@@ -146,37 +184,41 @@ const CardSaveDetails = ({ cardSaveDetailsOpen, setCardSaveDetailsOpen, state, r
                                                 id="time"
                                                 type="time"
                                                 className={classes.cardSaveDetailsTime}
-                                                value={endTime}
-                                                onChange={(e) => setEndTime(e.target.value)}
+                                                value={cardData?.filter((data) => data?.name == 'endTime')?.[0]?.val}
+                                                onChange={(e) => handleChange(e.target.value, 'endTime')}
                                             />
+                                            <Typography>{cardData?.filter((data) => data?.name == 'endTime')?.[0]?.error}</Typography>
                                             <TextField
                                                 id="date"
                                                 type="date"
                                                 className={classes.cardSaveDetailsDate}
-                                                value={endDate}
-                                                onChange={(e) => setEndDate(e.target.value)}
+                                                value={cardData?.filter((data) => data?.name == 'endDate')?.[0]?.val}
+                                                onChange={(e) => handleChange(e.target.value, 'endDate')}
                                             />
+                                            <Typography>{cardData?.filter((data) => data?.name == 'endDate')?.[0]?.error}</Typography>
                                         </Box>
                                     </Box>
                                 </Box>
                             </Box>
                             <Box className={classes.cardSaveDetailsDateTimeInputBox}>
                                 <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>Email address for card recipients</Typography>
-                                <Input 
-                                    placeholder='Use a comma to separate addresses' 
-                                    className={classes.cardSaveDetailsDateTimeInputBoxInput} 
-                                    value={emailCard}
-                                    onChange={(e) => setEmailCard(e.target.value)}
+                                <Input
+                                    placeholder='Use a comma to separate addresses'
+                                    className={classes.cardSaveDetailsDateTimeInputBoxInput}
+                                    value={cardData?.filter((data) => data?.name == 'emailCard')?.[0]?.val}
+                                    onChange={(e) => handleChange(e.target.value, 'emailCard')}
                                 />
+                                <Typography>{cardData?.filter((data) => data?.name == 'emailCard')?.[0]?.error}</Typography>
                             </Box>
                             <Box className={classes.cardSaveDetailsDateTimeInputBox}>
                                 <Typography className={classes.cardSaveDetailsDateTimeFieldTitle}>Email address for report recipients</Typography>
-                                <Input 
-                                    placeholder='Use a comma to separate addresses' 
+                                <Input
+                                    placeholder='Use a comma to separate addresses'
                                     className={classes.cardSaveDetailsDateTimeInputBoxInput}
-                                    value={emailReport}
-                                    onChange={(e) => setEmailReport(e.target.value)}
+                                    value={cardData?.filter((data) => data?.name == 'emailReport')?.[0]?.val}
+                                    onChange={(e) => handleChange(e.target.value, 'emailReport')}
                                 />
+                                <Typography>{cardData?.filter((data) => data?.name == 'emailReport')?.[0]?.error}</Typography>
                             </Box>
                             <Box className={newReportClasses.btnPart}>
                                 <Button onClick={() => handleClose()} className={`${newReportClasses.btnPartBtn} ${newReportClasses.backBtn}`}>Back</Button>

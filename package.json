@@ -17,6 +17,7 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.13",
     "@mui/styles": "^5.10.10",
+    "auth0-js": "^9.20.0",
     "axios": "^1.2.1",
     "babel-plugin-styled-components": "^2.0.7",
     "material-ui-icons": "^1.0.0-beta.36",

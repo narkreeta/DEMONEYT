@@ -36,6 +36,8 @@ import CounterImg from '../../public/asset/images/counter.svg';
 import HappySadImg from '../../public/asset/images/choice.svg';
 import DateImg from '../../public/asset/images/date.svg';
 import InputImg from '../../public/asset/images/empty.svg';
+import TextImg from '../../public/asset/images/Feedback_Icon.svg';
+import RatingImg from '../../public/asset/images/Rating_Icon.svg';
 
 const style = {
     position: 'absolute',
@@ -294,7 +296,10 @@ const NewstepIndex = ({ stepOpen, setStepOpen, stepsData, setStepsData, setState
                                                             // <Box className={classes.summaryRight}>
                                                             //     <Input className={classes.summaryRightInput} />
                                                             // </Box>
-                                                            <Image src={InputImg} />
+                                                            <Image src={TextImg} className={classes.textFieldImg} />
+                                                        }
+                                                        {ele?.name == 'Rating' &&
+                                                            <Image src={RatingImg} className={classes.ratingImg} />
                                                         }
                                                     </div>
                                                 </div>
